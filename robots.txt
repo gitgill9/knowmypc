@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://gitgill9.github.io/knowmypc/sitemap.xml
