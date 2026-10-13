@@ -12,8 +12,8 @@ import os
 # ---------------------------------------------------------------------------
 # Settings
 # ---------------------------------------------------------------------------
-SITE_URL = os.environ.get("KMP_SITE_URL", "https://gitgill9.github.io/knowmypc")
-SUPPORT_EMAIL = os.environ.get("KMP_SUPPORT_EMAIL", "support@example.com")
+SITE_URL = os.environ.get("KMP_SITE_URL", "https://knowmypc.app")
+SUPPORT_EMAIL = os.environ.get("KMP_SUPPORT_EMAIL", "support@knowmypc.app")
 CHECKOUT_URL = "https://buy.polar.sh/polar_cl_Z5MfJ5nniF9V287WZVeucoI9FtJk9AQQvbdxF32x2Yl"
 PORTAL_URL = "https://polar.sh/raspinder-s/portal"
 DOWNLOAD_URL = os.environ.get("KMP_DOWNLOAD_URL", "https://github.com/gitgill9/knowmypc/releases/latest/download/KnowMyPC-Setup.exe")
