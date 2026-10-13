@@ -3,11 +3,14 @@
 Each guide answers the search question first, then says whether the culprit is
 safe to stop, then the free manual fix. Know My PC gets one short mention at the
 end (build.py adds it). Edit or add guides here, then run:  python build.py
+When you change a guide's content, set its "updated" date to today.
 """
 
 GUIDES = [
     {
         "slug": "vmmem-high-memory",
+        "published": "2026-10-13",
+        "updated": "2026-10-13",
         "title": "Vmmem or VmmemWSL Using Too Much Memory: How to Fix It",
         "h1": "Vmmem using too much memory",
         "description": "Vmmem and VmmemWSL are the WSL 2 and Docker virtual machine. Why they hold on to RAM, how to free it with wsl --shutdown, and how to cap it in .wslconfig.",
@@ -36,6 +39,8 @@ autoMemoryReclaim=gradual</code></pre>"""),
     },
     {
         "slug": "antimalware-service-executable-high-cpu",
+        "published": "2026-10-13",
+        "updated": "2026-10-13",
         "title": "Antimalware Service Executable High CPU: How to Fix It",
         "h1": "Antimalware Service Executable using high CPU",
         "description": "Antimalware Service Executable (MsMpEng.exe) is Microsoft Defender scanning files. Why it spikes, when it stops on its own, and how to make it scan less.",
@@ -61,6 +66,8 @@ autoMemoryReclaim=gradual</code></pre>"""),
     },
     {
         "slug": "windows-modules-installer-worker-high-cpu",
+        "published": "2026-10-13",
+        "updated": "2026-10-13",
         "title": "Windows Modules Installer Worker High CPU: How to Fix It",
         "h1": "Windows Modules Installer Worker using high CPU",
         "description": "Windows Modules Installer Worker (TiWorker.exe) is Windows Update installing updates. Why it's busy, how long it takes, and what to do if it never stops.",
@@ -85,6 +92,8 @@ sfc /scannow</code></pre>
     },
     {
         "slug": "searchindexer-high-cpu",
+        "published": "2026-10-13",
+        "updated": "2026-10-13",
         "title": "SearchIndexer.exe High CPU or Disk Usage: How to Fix It",
         "h1": "Windows Search indexer using high CPU or disk",
         "description": "SearchIndexer.exe builds the index for Windows search. Why it gets busy, how to index fewer folders, and how to rebuild an index that's stuck.",
@@ -106,6 +115,8 @@ sfc /scannow</code></pre>
     },
     {
         "slug": "c-drive-full",
+        "published": "2026-10-13",
+        "updated": "2026-10-13",
         "title": "C: Drive Full? What's Taking Up Space and How to Free It",
         "h1": "What's taking up space on your C: drive",
         "description": "Where space hides on a full C: drive in Windows 11 and 10: Windows Update leftovers, temp files, hibernation, games, developer caches, WSL disks and AI models.",
@@ -140,6 +151,8 @@ sfc /scannow</code></pre>
     },
     {
         "slug": "port-in-use",
+        "published": "2026-10-13",
+        "updated": "2026-10-13",
         "title": "Port Already in Use on Windows: Find What's Using It",
         "h1": "Find what's using a port on Windows",
         "description": "Port 3000 or 8080 already in use on Windows? Find the process with PowerShell or netstat, stop it, and fix ports Windows has reserved for Hyper-V and WSL.",
