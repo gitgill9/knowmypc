@@ -19,11 +19,12 @@
 <meta name="twitter:image" content="https://knowmypc.app/img/og.png">
 <meta name="twitter:image:alt" content="Find what's using a port on Windows">
 <meta name="theme-color" content="#0e3b2e">
-<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="icon" href="/img/icon.png" type="image/png" sizes="128x128">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
 <link rel="preload" href="/fonts/adventor-bold.woff" as="font" type="font/woff" crossorigin>
 <link rel="stylesheet" href="/site.css">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Find what's using a port on Windows", "description": "Port 3000 or 8080 already in use on Windows? Find the process with PowerShell or netstat, stop it, and fix ports Windows has reserved for Hyper-V and WSL.", "dateModified": "2026-10-13", "author": {"@type": "Organization", "name": "Know My PC", "url": "https://knowmypc.app/"}, "mainEntityOfPage": "https://knowmypc.app/fix/port-in-use/", "image": "https://knowmypc.app/img/og.png"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Find what's using a port on Windows", "description": "Port 3000 or 8080 already in use on Windows? Find the process with PowerShell or netstat, stop it, and fix ports Windows has reserved for Hyper-V and WSL.", "datePublished": "2026-10-13", "dateModified": "2026-10-13", "author": {"@type": "Organization", "name": "Know My PC", "url": "https://knowmypc.app/"}, "mainEntityOfPage": "https://knowmypc.app/fix/port-in-use/", "image": "https://knowmypc.app/img/og.png"}</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -38,7 +39,7 @@
 <main id="main" class="wrap doc">
   <aside aria-label="On this page"><a href="#find">Find the process</a><a href="#stop">Stop it</a><a href="#special">When the owner looks strange</a><a href="#network">Is it reachable from your network?</a><a href="#related">More fixes</a></aside>
   <article>
-<p class="updated">Updated October 13, 2026</p>
+<p class="updated">Published October 13, 2026. Steps are for Windows 11 and 10.</p>
 <h2 id="find">Find the process</h2>
 <p>In PowerShell, replace 3000 with your port:</p>
 <pre><code>Get-NetTCPConnection -LocalPort 3000 -State Listen |

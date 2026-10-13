@@ -23,11 +23,19 @@ PRICE = "9.99"
 TRIAL_DAYS = 14
 REFUND_DAYS = 14
 SELLER = "Raspinder S"
-UPDATED = datetime.date.today().strftime("%B %-d, %Y")
+# Dates shown on pages and in the sitemap. Change a page's date only when its
+# content changes; Google treats dates that move on every build as fake freshness.
+HOME_UPDATED = "2026-10-13"
+SUPPORT_UPDATED = "2026-10-12"
+LEGAL_UPDATED = "2026-10-12"  # privacy policy and terms
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 DOWNLOAD_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>'
+
+
+def human_date(iso):
+    return datetime.date.fromisoformat(iso).strftime("%B %-d, %Y")
 
 
 def url_for(name):
@@ -67,7 +75,8 @@ def page(name, title, description, body, current="", head_extra="", og_type="web
 <meta name="twitter:image" content="{SITE_URL}/img/og.png">
 <meta name="twitter:image:alt" content="{image_alt}">
 <meta name="theme-color" content="#0e3b2e">
-<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="icon" href="/img/icon.png" type="image/png" sizes="128x128">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
 <link rel="preload" href="/fonts/adventor-bold.woff" as="font" type="font/woff" crossorigin>
 <link rel="stylesheet" href="/site.css">
@@ -105,21 +114,25 @@ PROBLEMS = [
      "It watches every process, groups them under the app that started them, and ranks the likely causes from the last five minutes, with the evidence and a fix for each.",
      ["Shows which app, how much and for how long: “Chrome averaged 41% of your CPU (peak 68%)”",
       "Recognises Windows' own busy work, like Defender scans, updates and search indexing, and tells you when it'll finish by itself",
-      "Ends a runaway app and everything it started, with one click"]),
+      "Ends a runaway app and everything it started, with one click"],
+     "Know My PC showing two things slowing a PC down: Google Chrome using 41% of the CPU with a fix, and a Defender scan that usually finishes on its own"),
     ("It lags when I play.", "history", "History shows exactly when it got bad",
      "Every slowdown is recorded with the apps responsible, so you can see it was Chrome and a Defender scan, not your game, that ate the headroom.",
      ["A 7-day CPU and memory timeline with overloads marked",
       "Game boost lowers other apps' priority while you play, then puts them back",
-      "Suggestions drawn from your own slowdowns, not generic tips"]),
+      "Suggestions drawn from your own slowdowns, not generic tips"],
+     "Know My PC History screen: a 24-hour CPU and memory chart with two slowdowns, each listing the apps responsible"),
     ("My C: drive is full.", "storage", "Find the space, then get it back safely",
      "A map of your folders shows what's big at a glance. Know My PC knows where Windows hides space: update caches, temp files, WSL disks, game libraries, model files.",
      ["Shows which folders are safe to clear and which hold your own files",
       "Installed apps sorted by size, with one-click uninstall",
-      "Only ever moves things to the Recycle Bin. Windows and Program Files are off-limits."]),
+      "Only ever moves things to the Recycle Bin. Windows and Program Files are off-limits."],
+     "Know My PC Storage screen: space that is safe to clear, such as temp files and the Chrome cache, above a clickable map of folders"),
     ("It takes forever to start.", "startup", "See what starts with Windows, and switch it off",
      "Every startup app, which company made it, and whether it's using memory right now. Switching one off works exactly like Task Manager, and you can switch it back on anytime.",
      ["Apps for all users too: Windows asks for permission, and that's it",
-      "Background services and scheduled tasks from other companies, listed separately"]),
+      "Background services and scheduled tasks from other companies, listed separately"],
+     "Know My PC Startup screen: startup apps with on/off switches, who made each one and how much memory it is using"),
 ]
 
 FAQ = [
@@ -151,8 +164,8 @@ def home():
         <p style="margin-top:10px">{p}</p>
         <ul>{"".join(f"<li>{x}</li>" for x in bullets)}</ul>
       </div>
-      <div class="shot"><img src="/img/{img}.webp" alt="Know My PC {img} screen" width="1920" height="1200" loading="lazy" decoding="async"></div>
-    </section>""" for i, (q, img, h, p, bullets) in enumerate(PROBLEMS))
+      <div class="shot"><img src="/img/{img}.webp" alt="{alt}" width="1920" height="1200" loading="lazy" decoding="async"></div>
+    </section>""" for i, (q, img, h, p, bullets, alt) in enumerate(PROBLEMS))
 
     guide_items = "".join(f'<li><a href="{url_for("fix/" + g["slug"])}"><b>{g["h1"]}</b><span>{g["summary"]}</span></a></li>' for g in GUIDES)
     faq = "".join(f"<details><summary><h3>{q}</h3></summary><p>{a}</p></details>" for q, a in FAQ)
@@ -160,6 +173,12 @@ def home():
     ld = {
         "@context": "https://schema.org",
         "@graph": [
+            {
+                "@type": "WebSite",
+                "name": "Know My PC",
+                "alternateName": ["knowmypc.app"],
+                "url": f"{SITE_URL}/",
+            },
             {
                 "@type": "SoftwareApplication",
                 "name": "Know My PC",
@@ -326,7 +345,7 @@ def support():
 def privacy():
     toc = [("summary", "In short"), ("app", "The app"), ("purchases", "Purchases"), ("site", "This website"), ("support-mail", "Support email"), ("rights", "Your choices"), ("changes", "Changes")]
     article = f"""
-<p class="updated">Last updated {UPDATED}</p>
+<p class="updated">Last updated {human_date(LEGAL_UPDATED)}</p>
 <h2 id="summary">In short</h2>
 <p>Know My PC is built to keep your information on your PC. It has no account system and no analytics, and it doesn't sell or share data. This policy explains the few things that do leave your PC.</p>
 
@@ -358,7 +377,7 @@ def privacy():
 def terms():
     toc = [("license", "Your license"), ("trial", "Trial"), ("payments", "Payments and refunds"), ("use", "Using the software"), ("warranty", "No warranty"), ("liability", "Liability"), ("contact", "Contact")]
     article = f"""
-<p class="updated">Last updated {UPDATED}</p>
+<p class="updated">Last updated {human_date(LEGAL_UPDATED)}</p>
 <h2 id="license">Your license</h2>
 <p>When you buy Know My PC, you get a personal, non-transferable license to use it on up to 2 PCs that you own or control. The software is licensed, not sold. You may not resell, share or publish license keys, or try to bypass the license check.</p>
 
@@ -392,7 +411,7 @@ def guide(g):
     sections = "".join(f'\n<h2 id="{i}">{h}</h2>{html}' for i, h, html in g["sections"])
     related = "".join(f'<li><a href="{url_for("fix/" + o["slug"])}">{o["h1"]}</a></li>' for o in GUIDES if o is not g)
     article = f"""
-<p class="updated">Updated {UPDATED}</p>{sections}
+<p class="updated">Published {human_date(g["published"])}{"" if g["updated"] == g["published"] else ", updated " + human_date(g["updated"])}. Steps are for Windows 11 and 10.</p>{sections}
 
 <div class="contact-card" style="margin-top:48px"><div><b>See it live on your PC</b><span>{g["app"]}</span></div><a class="btn solid" href="{DOWNLOAD_URL}">{DOWNLOAD_ICON}Try it free for {TRIAL_DAYS} days</a></div>
 
@@ -404,7 +423,8 @@ def guide(g):
         "@type": "TechArticle",
         "headline": g["h1"],
         "description": g["description"],
-        "dateModified": datetime.date.today().isoformat(),
+        "datePublished": g["published"],
+        "dateModified": g["updated"],
         "author": {"@type": "Organization", "name": "Know My PC", "url": f"{SITE_URL}/"},
         "mainEntityOfPage": SITE_URL + url_for("fix/" + g["slug"]),
         "image": f"{SITE_URL}/img/og.png",
@@ -435,24 +455,41 @@ def guides_index():
                 body, "fix")
 
 
+def not_found():
+    items = "".join(f'<li><a href="{url_for("fix/" + g["slug"])}"><b>{g["h1"]}</b><span>{g["summary"]}</span></a></li>' for g in GUIDES)
+    body = f"""
+  <div class="wrap page-hero"><h1>Page not found</h1><p>That page doesn't exist or has moved. Try the <a href="/" style="color:var(--pad)">home page</a>, or one of these guides.</p></div>
+</div>
+<main id="main" class="wrap guides-page">
+  <ul class="guide-list">{items}</ul>
+</main>
+"""
+    html = page("404", "Page not found | Know My PC", "This page doesn't exist. Find out why your Windows PC is slow with Know My PC's guides.", body)
+    # The 404 page has no canonical URL of its own and shouldn't be indexed.
+    return html.replace(f'<link rel="canonical" href="{SITE_URL}/404.html">', '<meta name="robots" content="noindex">')
+
+
 def main():
     pages = {"index": home(), "support": support(), "privacy": privacy(), "terms": terms(), "fix": guides_index()}
     for g in GUIDES:
         pages["fix/" + g["slug"]] = guide(g)
-    for name, html in pages.items():
+    for name, html in list(pages.items()) + [("404", not_found())]:
         path = os.path.join(HERE, name, "index.html") if url_for(name).endswith("/") and name != "index" else os.path.join(HERE, f"{name}.html")
         os.makedirs(os.path.dirname(path), exist_ok=True)
         with open(path, "w", encoding="utf-8") as f:
             f.write(html)
-    today = datetime.date.today().isoformat()
-    urls = "".join(f"<url><loc>{SITE_URL}{url_for(n)}</loc><lastmod>{today}</lastmod></url>" for n in pages)
+    # Each page's own date, so lastmod changes only when that page's content does.
+    newest_guide = max(g["updated"] for g in GUIDES)
+    lastmod = {"index": max(HOME_UPDATED, newest_guide), "support": SUPPORT_UPDATED, "privacy": LEGAL_UPDATED, "terms": LEGAL_UPDATED, "fix": newest_guide}
+    lastmod.update({"fix/" + g["slug"]: g["updated"] for g in GUIDES})
+    urls = "".join(f"<url><loc>{SITE_URL}{url_for(n)}</loc><lastmod>{lastmod[n]}</lastmod></url>" for n in pages)
     with open(os.path.join(HERE, "sitemap.xml"), "w", encoding="utf-8") as f:
         f.write(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{urls}</urlset>\n')
     with open(os.path.join(HERE, "robots.txt"), "w", encoding="utf-8") as f:
         f.write(f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}/sitemap.xml\n")
     # Empty .nojekyll makes GitHub Pages serve files as-is.
     open(os.path.join(HERE, ".nojekyll"), "w").close()
-    print("Built", len(pages), "pages for", SITE_URL)
+    print("Built", len(pages), "pages and 404.html for", SITE_URL)
 
 
 if __name__ == "__main__":

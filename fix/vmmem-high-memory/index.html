@@ -19,11 +19,12 @@
 <meta name="twitter:image" content="https://knowmypc.app/img/og.png">
 <meta name="twitter:image:alt" content="Vmmem using too much memory">
 <meta name="theme-color" content="#0e3b2e">
-<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="icon" href="/img/icon.png" type="image/png" sizes="128x128">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
 <link rel="preload" href="/fonts/adventor-bold.woff" as="font" type="font/woff" crossorigin>
 <link rel="stylesheet" href="/site.css">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Vmmem using too much memory", "description": "Vmmem and VmmemWSL are the WSL 2 and Docker virtual machine. Why they hold on to RAM, how to free it with wsl --shutdown, and how to cap it in .wslconfig.", "dateModified": "2026-10-13", "author": {"@type": "Organization", "name": "Know My PC", "url": "https://knowmypc.app/"}, "mainEntityOfPage": "https://knowmypc.app/fix/vmmem-high-memory/", "image": "https://knowmypc.app/img/og.png"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Vmmem using too much memory", "description": "Vmmem and VmmemWSL are the WSL 2 and Docker virtual machine. Why they hold on to RAM, how to free it with wsl --shutdown, and how to cap it in .wslconfig.", "datePublished": "2026-10-13", "dateModified": "2026-10-13", "author": {"@type": "Organization", "name": "Know My PC", "url": "https://knowmypc.app/"}, "mainEntityOfPage": "https://knowmypc.app/fix/vmmem-high-memory/", "image": "https://knowmypc.app/img/og.png"}</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -38,7 +39,7 @@
 <main id="main" class="wrap doc">
   <aside aria-label="On this page"><a href="#what">What Vmmem is</a><a href="#safe">Is it safe to end?</a><a href="#free">Free the memory now</a><a href="#cap">Cap how much memory WSL can use</a><a href="#related">More fixes</a></aside>
   <article>
-<p class="updated">Updated October 13, 2026</p>
+<p class="updated">Published October 13, 2026. Steps are for Windows 11 and 10.</p>
 <h2 id="what">What Vmmem is</h2>
 <p><strong>Vmmem</strong> (called <strong>VmmemWSL</strong> on newer versions of Windows) is how Task Manager shows the memory and CPU used by a virtual machine. On most PCs that machine runs WSL 2, the Windows Subsystem for Linux. Docker Desktop runs on WSL 2 too, so starting Docker starts Vmmem.</p>
 <p>It uses so much memory because Linux treats spare RAM as file cache, and WSL 2 gives that memory back to Windows slowly. By default WSL 2 can use up to half of your PC's RAM, and it holds on to it after builds or containers have finished.</p>
