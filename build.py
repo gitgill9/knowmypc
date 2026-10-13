@@ -9,6 +9,8 @@ import datetime
 import json
 import os
 
+from guides import GUIDES
+
 # ---------------------------------------------------------------------------
 # Settings
 # ---------------------------------------------------------------------------
@@ -28,11 +30,21 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 DOWNLOAD_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>'
 
 
-def page(name, title, description, body, current="", head_extra=""):
-    canonical = f"{SITE_URL}/" if name == "index" else f"{SITE_URL}/{name}.html"
+def url_for(name):
+    """Site-relative URL of a page: index -> /, support -> /support.html, fix/x -> /fix/x/."""
+    if name == "index":
+        return "/"
+    if "/" in name or name == "fix":
+        return f"/{name}/"
+    return f"/{name}.html"
+
+
+def page(name, title, description, body, current="", head_extra="", og_type="website", image_alt=""):
+    canonical = SITE_URL + url_for(name)
+    image_alt = image_alt or "Know My PC ranking what's slowing a Windows PC down"
     nav = "".join(
         f'<a href="{href}"{" aria-current=\"page\"" if key == current else ""}>{label}</a>'
-        for key, href, label in [("features", "index.html#features", "Features"), ("pricing", "index.html#pricing", "Pricing"), ("support", "support.html", "Support")]
+        for key, href, label in [("features", "/#features", "Features"), ("pricing", "/#pricing", "Pricing"), ("fix", "/fix/", "Guides"), ("support", "/support.html", "Support")]
     )
     return f"""<!doctype html>
 <html lang="en">
@@ -42,35 +54,40 @@ def page(name, title, description, body, current="", head_extra=""):
 <title>{title}</title>
 <meta name="description" content="{description}">
 <link rel="canonical" href="{canonical}">
-<meta property="og:type" content="website">
+<meta property="og:type" content="{og_type}">
 <meta property="og:site_name" content="Know My PC">
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{description}">
 <meta property="og:url" content="{canonical}">
 <meta property="og:image" content="{SITE_URL}/img/og.png">
+<meta property="og:image:alt" content="{image_alt}">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{title}">
+<meta name="twitter:description" content="{description}">
+<meta name="twitter:image" content="{SITE_URL}/img/og.png">
+<meta name="twitter:image:alt" content="{image_alt}">
 <meta name="theme-color" content="#0e3b2e">
-<link rel="icon" href="favicon.png" type="image/png">
-<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-<link rel="preload" href="fonts/adventor-bold.woff" as="font" type="font/woff" crossorigin>
-<link rel="stylesheet" href="site.css">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<link rel="preload" href="/fonts/adventor-bold.woff" as="font" type="font/woff" crossorigin>
+<link rel="stylesheet" href="/site.css">
 {head_extra}
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <div class="board">
   <header class="wrap site-head">
-    <a class="logo" href="index.html"><img src="img/icon.png" alt="" width="32" height="32">Know My PC</a>
+    <a class="logo" href="/"><img src="/img/icon.png" alt="" width="32" height="32">Know My PC</a>
     <nav aria-label="Main">{nav}<a class="btn primary" href="{DOWNLOAD_URL}">Download</a></nav>
   </header>
 {body}
 <footer class="board site-foot">
   <div class="wrap">
     <div class="cols">
-      <div><a class="logo" href="index.html"><img src="img/icon.png" alt="" width="32" height="32">Know My PC</a>
+      <div><a class="logo" href="/"><img src="/img/icon.png" alt="" width="32" height="32">Know My PC</a>
         <p>Know why your Windows PC is slow, and what to do about it.</p></div>
-      <nav aria-label="Footer"><a href="{DOWNLOAD_URL}">Download</a><a href="{CHECKOUT_URL}">Buy for ${PRICE}</a><a href="support.html">Support</a><a href="mailto:{SUPPORT_EMAIL}">{SUPPORT_EMAIL}</a></nav>
-      <nav aria-label="Legal"><a href="privacy.html">Privacy policy</a><a href="terms.html">Terms of sale</a><a href="{PORTAL_URL}">Manage your purchase</a></nav>
+      <nav aria-label="Footer"><a href="{DOWNLOAD_URL}">Download</a><a href="{CHECKOUT_URL}">Buy for ${PRICE}</a><a href="/fix/">Fix guides</a><a href="/support.html">Support</a><a href="mailto:{SUPPORT_EMAIL}">{SUPPORT_EMAIL}</a></nav>
+      <nav aria-label="Legal"><a href="/privacy.html">Privacy policy</a><a href="/terms.html">Terms of sale</a><a href="{PORTAL_URL}">Manage your purchase</a></nav>
     </div>
     <p class="legal">© {datetime.date.today().year} {SELLER}. Payments are processed by Polar, our merchant of record. Windows is a trademark of Microsoft; Know My PC isn't affiliated with Microsoft.</p>
   </div>
@@ -134,10 +151,11 @@ def home():
         <p style="margin-top:10px">{p}</p>
         <ul>{"".join(f"<li>{x}</li>" for x in bullets)}</ul>
       </div>
-      <div class="shot"><img src="img/{img}.webp" alt="Know My PC {img} screen" width="1920" height="1200" loading="lazy" decoding="async"></div>
+      <div class="shot"><img src="/img/{img}.webp" alt="Know My PC {img} screen" width="1920" height="1200" loading="lazy" decoding="async"></div>
     </section>""" for i, (q, img, h, p, bullets) in enumerate(PROBLEMS))
 
-    faq = "".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q, a in FAQ)
+    guide_items = "".join(f'<li><a href="{url_for("fix/" + g["slug"])}"><b>{g["h1"]}</b><span>{g["summary"]}</span></a></li>' for g in GUIDES)
+    faq = "".join(f"<details><summary><h3>{q}</h3></summary><p>{a}</p></details>" for q, a in FAQ)
 
     ld = {
         "@context": "https://schema.org",
@@ -172,7 +190,7 @@ def home():
       </div>
       <ul class="facts"><li>{TRIAL_DAYS}-day free trial</li><li>One-time purchase</li><li>Works on 2 PCs</li><li>Windows 10 and 11</li></ul>
     </div>
-    <div class="hero-shot"><img src="img/overview-dark.webp" alt="Know My PC ranking two causes of slowness: Google Chrome using 41% of the CPU, and a Defender scan" width="1920" height="1200" fetchpriority="high"></div>
+    <div class="hero-shot"><img src="/img/overview-dark.webp" alt="Know My PC ranking two causes of slowness: Google Chrome using 41% of the CPU, and a Defender scan" width="1920" height="1200" fetchpriority="high"></div>
   </div>
 </div>
 
@@ -221,14 +239,19 @@ def home():
     </div>
   </section>
 
+  <section class="wrap home-guides" aria-labelledby="guides-h">
+    <div><h2 id="guides-h">Common slowdowns, explained</h2><p class="fine" style="font-size:16px">Free guides to the usual suspects, whether or not you use Know My PC.</p></div>
+    <ul class="guide-list">{guide_items}</ul>
+  </section>
+
   <section class="wrap faq" aria-labelledby="faq-h">
-    <div><h2 id="faq-h">Questions</h2><p class="fine" style="font-size:16px">Something else? <a href="support.html">Get help</a> or email <a href="mailto:{SUPPORT_EMAIL}">{SUPPORT_EMAIL}</a>.</p></div>
+    <div><h2 id="faq-h">Questions</h2><p class="fine" style="font-size:16px">Something else? <a href="/support.html">Get help</a> or email <a href="mailto:{SUPPORT_EMAIL}">{SUPPORT_EMAIL}</a>.</p></div>
     <div>{faq}</div>
   </section>
 </main>
 """
     return page("index", "Know My PC: find out why your Windows PC is slow",
-                "Know My PC shows what's slowing your Windows PC down, ranked with evidence and a fix for each. Slowdown history, storage, startup apps and Game boost. $9.99 one-time.",
+                "See what's slowing your Windows PC down, ranked with the evidence and a fix for each. Slowdown history, storage, startup apps and Game boost.",
                 body, "features", head)
 
 
@@ -361,20 +384,75 @@ def terms():
                "Terms of sale", "Plain-English terms for buying and using Know My PC.", toc, article)
 
 
+# ---------------------------------------------------------------------------
+# Fix guides (content lives in guides.py)
+# ---------------------------------------------------------------------------
+def guide(g):
+    toc = [(i, h) for i, h, _ in g["sections"]]
+    sections = "".join(f'\n<h2 id="{i}">{h}</h2>{html}' for i, h, html in g["sections"])
+    related = "".join(f'<li><a href="{url_for("fix/" + o["slug"])}">{o["h1"]}</a></li>' for o in GUIDES if o is not g)
+    article = f"""
+<p class="updated">Updated {UPDATED}</p>{sections}
+
+<div class="contact-card" style="margin-top:48px"><div><b>See it live on your PC</b><span>{g["app"]}</span></div><a class="btn solid" href="{DOWNLOAD_URL}">{DOWNLOAD_ICON}Try it free for {TRIAL_DAYS} days</a></div>
+
+<h2 id="related">More fixes</h2>
+<ul>{related}</ul>
+"""
+    ld = {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": g["h1"],
+        "description": g["description"],
+        "dateModified": datetime.date.today().isoformat(),
+        "author": {"@type": "Organization", "name": "Know My PC", "url": f"{SITE_URL}/"},
+        "mainEntityOfPage": SITE_URL + url_for("fix/" + g["slug"]),
+        "image": f"{SITE_URL}/img/og.png",
+    }
+    head = f'<script type="application/ld+json">{json.dumps(ld)}</script>'
+    body = f"""
+  <div class="wrap page-hero"><p class="crumb"><a href="/fix/">Fix guides</a></p><h1>{g["h1"]}</h1><p>{g["lede"]}</p></div>
+</div>
+<main id="main" class="wrap doc">
+  <aside aria-label="On this page">{"".join(f'<a href="#{i}">{t}</a>' for i, t in toc + [("related", "More fixes")])}</aside>
+  <article>{article}</article>
+</main>
+"""
+    return page("fix/" + g["slug"], g["title"], g["description"], body, "fix", head, "article", g["h1"])
+
+
+def guides_index():
+    items = "".join(f'<li><a href="{url_for("fix/" + g["slug"])}"><b>{g["h1"]}</b><span>{g["summary"]}</span></a></li>' for g in GUIDES)
+    body = f"""
+  <div class="wrap page-hero"><h1>Why is my PC slow?</h1><p>Plain-English fixes for the things that slow Windows down most often: what each one is, whether it's safe to stop, and how to fix it yourself.</p></div>
+</div>
+<main id="main" class="wrap guides-page">
+  <ul class="guide-list">{items}</ul>
+</main>
+"""
+    return page("fix", "Why Is My PC Slow? Fixes for Common Windows Slowdowns",
+                "Plain-English fixes for common Windows slowdowns: Vmmem, Antimalware Service Executable, Windows Update, search indexing, a full C: drive and busy ports.",
+                body, "fix")
+
+
 def main():
-    pages = {"index": home(), "support": support(), "privacy": privacy(), "terms": terms()}
+    pages = {"index": home(), "support": support(), "privacy": privacy(), "terms": terms(), "fix": guides_index()}
+    for g in GUIDES:
+        pages["fix/" + g["slug"]] = guide(g)
     for name, html in pages.items():
-        with open(os.path.join(HERE, f"{name}.html"), "w", encoding="utf-8") as f:
+        path = os.path.join(HERE, name, "index.html") if url_for(name).endswith("/") and name != "index" else os.path.join(HERE, f"{name}.html")
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "w", encoding="utf-8") as f:
             f.write(html)
     today = datetime.date.today().isoformat()
-    urls = "".join(f"<url><loc>{SITE_URL}/{'' if n == 'index' else n + '.html'}</loc><lastmod>{today}</lastmod></url>" for n in pages)
+    urls = "".join(f"<url><loc>{SITE_URL}{url_for(n)}</loc><lastmod>{today}</lastmod></url>" for n in pages)
     with open(os.path.join(HERE, "sitemap.xml"), "w", encoding="utf-8") as f:
         f.write(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{urls}</urlset>\n')
     with open(os.path.join(HERE, "robots.txt"), "w", encoding="utf-8") as f:
         f.write(f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}/sitemap.xml\n")
     # Empty .nojekyll makes GitHub Pages serve files as-is.
     open(os.path.join(HERE, ".nojekyll"), "w").close()
-    print("Built", ", ".join(f"{n}.html" for n in pages), "for", SITE_URL)
+    print("Built", len(pages), "pages for", SITE_URL)
 
 
 if __name__ == "__main__":

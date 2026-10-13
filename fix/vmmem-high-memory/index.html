@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vmmem or VmmemWSL Using Too Much Memory: How to Fix It</title>
+<meta name="description" content="Vmmem and VmmemWSL are the WSL 2 and Docker virtual machine. Why they hold on to RAM, how to free it with wsl --shutdown, and how to cap it in .wslconfig.">
+<link rel="canonical" href="https://knowmypc.app/fix/vmmem-high-memory/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Know My PC">
+<meta property="og:title" content="Vmmem or VmmemWSL Using Too Much Memory: How to Fix It">
+<meta property="og:description" content="Vmmem and VmmemWSL are the WSL 2 and Docker virtual machine. Why they hold on to RAM, how to free it with wsl --shutdown, and how to cap it in .wslconfig.">
+<meta property="og:url" content="https://knowmypc.app/fix/vmmem-high-memory/">
+<meta property="og:image" content="https://knowmypc.app/img/og.png">
+<meta property="og:image:alt" content="Vmmem using too much memory">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vmmem or VmmemWSL Using Too Much Memory: How to Fix It">
+<meta name="twitter:description" content="Vmmem and VmmemWSL are the WSL 2 and Docker virtual machine. Why they hold on to RAM, how to free it with wsl --shutdown, and how to cap it in .wslconfig.">
+<meta name="twitter:image" content="https://knowmypc.app/img/og.png">
+<meta name="twitter:image:alt" content="Vmmem using too much memory">
+<meta name="theme-color" content="#0e3b2e">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<link rel="preload" href="/fonts/adventor-bold.woff" as="font" type="font/woff" crossorigin>
+<link rel="stylesheet" href="/site.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Vmmem using too much memory", "description": "Vmmem and VmmemWSL are the WSL 2 and Docker virtual machine. Why they hold on to RAM, how to free it with wsl --shutdown, and how to cap it in .wslconfig.", "dateModified": "2026-10-13", "author": {"@type": "Organization", "name": "Know My PC", "url": "https://knowmypc.app/"}, "mainEntityOfPage": "https://knowmypc.app/fix/vmmem-high-memory/", "image": "https://knowmypc.app/img/og.png"}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="board">
+  <header class="wrap site-head">
+    <a class="logo" href="/"><img src="/img/icon.png" alt="" width="32" height="32">Know My PC</a>
+    <nav aria-label="Main"><a href="/#features">Features</a><a href="/#pricing">Pricing</a><a href="/fix/" aria-current="page">Guides</a><a href="/support.html">Support</a><a class="btn primary" href="https://knowmypc.app/download/KnowMyPC-Setup.exe">Download</a></nav>
+  </header>
+
+  <div class="wrap page-hero"><p class="crumb"><a href="/fix/">Fix guides</a></p><h1>Vmmem using too much memory</h1><p>Vmmem is the virtual machine behind WSL 2 and Docker Desktop. It's not a virus, and you can free its memory in seconds.</p></div>
+</div>
+<main id="main" class="wrap doc">
+  <aside aria-label="On this page"><a href="#what">What Vmmem is</a><a href="#safe">Is it safe to end?</a><a href="#free">Free the memory now</a><a href="#cap">Cap how much memory WSL can use</a><a href="#related">More fixes</a></aside>
+  <article>
+<p class="updated">Updated October 13, 2026</p>
+<h2 id="what">What Vmmem is</h2>
+<p><strong>Vmmem</strong> (called <strong>VmmemWSL</strong> on newer versions of Windows) is how Task Manager shows the memory and CPU used by a virtual machine. On most PCs that machine runs WSL 2, the Windows Subsystem for Linux. Docker Desktop runs on WSL 2 too, so starting Docker starts Vmmem.</p>
+<p>It uses so much memory because Linux treats spare RAM as file cache, and WSL 2 gives that memory back to Windows slowly. By default WSL 2 can use up to half of your PC's RAM, and it holds on to it after builds or containers have finished.</p>
+<h2 id="safe">Is it safe to end?</h2>
+<p>Don't end it from Task Manager; Windows usually refuses anyway. Shut WSL down properly instead (below). That stops every Linux distro and Docker container, so save your work in them first.</p>
+<h2 id="free">Free the memory now</h2>
+<p>Open PowerShell or Command Prompt and run:</p>
+<pre><code>wsl --shutdown</code></pre>
+<p>Vmmem disappears within a few seconds. WSL starts again next time you open a Linux terminal. If you use Docker Desktop, quit it from its icon in the taskbar first.</p>
+<h2 id="cap">Cap how much memory WSL can use</h2>
+<p>Create or edit the file <code>%UserProfile%\.wslconfig</code> (for example <code>C:\Users\you\.wslconfig</code>) and add:</p>
+<pre><code>[wsl2]
+memory=6GB</code></pre>
+<p>Pick a number that leaves room for Windows: 4 to 6 GB on a 16 GB PC, 8 to 12 GB on a 32 GB PC. Then run <code>wsl --shutdown</code> so the setting takes effect. Docker Desktop with the WSL 2 backend follows the same limit.</p>
+<p>Recent versions of WSL can also hand unused memory back to Windows on their own. Run <code>wsl --update</code>, then add this to the same file:</p>
+<pre><code>[experimental]
+autoMemoryReclaim=gradual</code></pre>
+
+<div class="contact-card" style="margin-top:48px"><div><b>See it live on your PC</b><span>Know My PC labels Vmmem as the WSL or Docker virtual machine, shows how much memory it's holding, and lists your WSL distros and Docker containers next to it.</span></div><a class="btn solid" href="https://knowmypc.app/download/KnowMyPC-Setup.exe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>Try it free for 14 days</a></div>
+
+<h2 id="related">More fixes</h2>
+<ul><li><a href="/fix/antimalware-service-executable-high-cpu/">Antimalware Service Executable using high CPU</a></li><li><a href="/fix/windows-modules-installer-worker-high-cpu/">Windows Modules Installer Worker using high CPU</a></li><li><a href="/fix/searchindexer-high-cpu/">Windows Search indexer using high CPU or disk</a></li><li><a href="/fix/c-drive-full/">What's taking up space on your C: drive</a></li><li><a href="/fix/port-in-use/">Find what's using a port on Windows</a></li></ul>
+</article>
+</main>
+
+<footer class="board site-foot">
+  <div class="wrap">
+    <div class="cols">
+      <div><a class="logo" href="/"><img src="/img/icon.png" alt="" width="32" height="32">Know My PC</a>
+        <p>Know why your Windows PC is slow, and what to do about it.</p></div>
+      <nav aria-label="Footer"><a href="https://knowmypc.app/download/KnowMyPC-Setup.exe">Download</a><a href="https://buy.polar.sh/polar_cl_Z5MfJ5nniF9V287WZVeucoI9FtJk9AQQvbdxF32x2Yl">Buy for $9.99</a><a href="/fix/">Fix guides</a><a href="/support.html">Support</a><a href="mailto:support@knowmypc.app">support@knowmypc.app</a></nav>
+      <nav aria-label="Legal"><a href="/privacy.html">Privacy policy</a><a href="/terms.html">Terms of sale</a><a href="https://polar.sh/raspinder-s/portal">Manage your purchase</a></nav>
+    </div>
+    <p class="legal">© 2026 Raspinder S. Payments are processed by Polar, our merchant of record. Windows is a trademark of Microsoft; Know My PC isn't affiliated with Microsoft.</p>
+  </div>
+</footer>
+</body>
+</html>
