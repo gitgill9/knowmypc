@@ -177,3 +177,20 @@ code { font-family: "Cascadia Mono", Consolas, ui-monospace, monospace; font-siz
   .problems { padding-top: 64px; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+
+/* ---------- Fix guides ---------- */
+.faq summary h3 { font: inherit; letter-spacing: normal; }
+.page-hero .crumb { font-size: 15px; margin: 0 0 10px; }
+.page-hero .crumb a { color: var(--pad); text-decoration: none; }
+.doc article pre { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; overflow-x: auto; margin: 12px 0; }
+.doc article pre code { background: none; padding: 0; }
+.doc article pre + p { margin-top: 12px; }
+.guides-page { padding: 56px 0 96px; }
+.home-guides { padding: 0 0 96px; display: grid; grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr); gap: 56px; }
+.guide-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.guide-list a { display: block; height: 100%; background: var(--panel); border: 1px solid var(--line-2); border-radius: 14px; padding: 18px 20px; text-decoration: none; color: var(--ink); }
+.guide-list a:hover { border-color: var(--action); }
+.guide-list b { display: block; font: 700 18px/1.25 var(--display); }
+.guide-list span { display: block; color: var(--ink-3); font-size: 15px; margin-top: 6px; }
+@media (max-width: 900px) { .home-guides { grid-template-columns: 1fr; gap: 24px; } }
+.doc article { min-width: 0; }

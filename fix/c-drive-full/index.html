@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C: Drive Full? What's Taking Up Space and How to Free It</title>
+<meta name="description" content="Where space hides on a full C: drive in Windows 11 and 10: Windows Update leftovers, temp files, hibernation, games, developer caches, WSL disks and AI models.">
+<link rel="canonical" href="https://knowmypc.app/fix/c-drive-full/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Know My PC">
+<meta property="og:title" content="C: Drive Full? What's Taking Up Space and How to Free It">
+<meta property="og:description" content="Where space hides on a full C: drive in Windows 11 and 10: Windows Update leftovers, temp files, hibernation, games, developer caches, WSL disks and AI models.">
+<meta property="og:url" content="https://knowmypc.app/fix/c-drive-full/">
+<meta property="og:image" content="https://knowmypc.app/img/og.png">
+<meta property="og:image:alt" content="What's taking up space on your C: drive">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="C: Drive Full? What's Taking Up Space and How to Free It">
+<meta name="twitter:description" content="Where space hides on a full C: drive in Windows 11 and 10: Windows Update leftovers, temp files, hibernation, games, developer caches, WSL disks and AI models.">
+<meta name="twitter:image" content="https://knowmypc.app/img/og.png">
+<meta name="twitter:image:alt" content="What's taking up space on your C: drive">
+<meta name="theme-color" content="#0e3b2e">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<link rel="preload" href="/fonts/adventor-bold.woff" as="font" type="font/woff" crossorigin>
+<link rel="stylesheet" href="/site.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "What's taking up space on your C: drive", "description": "Where space hides on a full C: drive in Windows 11 and 10: Windows Update leftovers, temp files, hibernation, games, developer caches, WSL disks and AI models.", "dateModified": "2026-10-13", "author": {"@type": "Organization", "name": "Know My PC", "url": "https://knowmypc.app/"}, "mainEntityOfPage": "https://knowmypc.app/fix/c-drive-full/", "image": "https://knowmypc.app/img/og.png"}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="board">
+  <header class="wrap site-head">
+    <a class="logo" href="/"><img src="/img/icon.png" alt="" width="32" height="32">Know My PC</a>
+    <nav aria-label="Main"><a href="/#features">Features</a><a href="/#pricing">Pricing</a><a href="/fix/" aria-current="page">Guides</a><a href="/support.html">Support</a><a class="btn primary" href="https://knowmypc.app/download/KnowMyPC-Setup.exe">Download</a></nav>
+  </header>
+
+  <div class="wrap page-hero"><p class="crumb"><a href="/fix/">Fix guides</a></p><h1>What's taking up space on your C: drive</h1><p>A full C: drive slows Windows down. Here's where space usually piles up, and how to get it back safely.</p></div>
+</div>
+<main id="main" class="wrap doc">
+  <aside aria-label="On this page"><a href="#start">Start with Windows' own view</a><a href="#windows">Windows leftovers</a><a href="#yours">Your own files and apps</a><a href="#dev">Developer caches, WSL disks and AI models</a><a href="#related">More fixes</a></aside>
+  <article>
+<p class="updated">Updated October 13, 2026</p>
+<h2 id="start">Start with Windows' own view</h2>
+<p>Open Settings → System → <strong>Storage</strong>. It shows what's using space by category, and <strong>Cleanup recommendations</strong> lists big files, unused apps and files already in the cloud. Turn on <strong>Storage Sense</strong> on the same page to clean temporary files and the Recycle Bin automatically.</p>
+<h2 id="windows">Windows leftovers</h2>
+<ul>
+<li><strong>Windows Update files and old Windows versions.</strong> Search Start for Disk Cleanup, click <strong>Clean up system files</strong>, and tick Windows Update Cleanup and Previous Windows installation(s). This can free several gigabytes.</li>
+<li><strong>Temporary files.</strong> Settings → System → Storage → Temporary files.</li>
+<li><strong>Recycle Bin.</strong> Files you deleted still count until it's emptied.</li>
+<li><strong>Hibernation file.</strong> <code>hiberfil.sys</code> can be as large as several gigabytes. If you never hibernate, run <code>powercfg /hibernate off</code> in an administrator Terminal to remove it. This also turns off Fast startup.</li>
+</ul>
+<p>Leave <code>pagefile.sys</code> alone. Windows needs it.</p>
+<h2 id="yours">Your own files and apps</h2>
+<ul>
+<li><strong>Downloads.</strong> Installers and zip files you've already used.</li>
+<li><strong>Installed apps.</strong> Settings → Apps → Installed apps, sorted by size.</li>
+<li><strong>Games.</strong> Steam, Epic and Xbox can move a game to another drive from their own settings instead of reinstalling it.</li>
+</ul>
+<h2 id="dev">Developer caches, WSL disks and AI models</h2>
+<ul>
+<li><strong>Package caches.</strong> <code>npm cache clean --force</code>, <code>pip cache purge</code>, <code>dotnet nuget locals all --clear</code>. Cargo keeps downloads in <code>%UserProfile%\.cargo\registry</code>.</li>
+<li><strong>Docker.</strong> <code>docker system prune</code> removes stopped containers and unused images.</li>
+<li><strong>WSL disks.</strong> Each Linux distro lives in an <code>ext4.vhdx</code> file that grows but doesn't shrink on its own, so deleting files inside Linux doesn't give Windows the space back. Recent WSL versions can fix that with <code>wsl --manage &lt;distro&gt; --set-sparse true</code>.</li>
+<li><strong>Ollama models.</strong> Stored in <code>%UserProfile%\.ollama\models</code>. Run <code>ollama list</code> to see them and <code>ollama rm &lt;model&gt;</code> to delete one.</li>
+</ul>
+
+<div class="contact-card" style="margin-top:48px"><div><b>See it live on your PC</b><span>Know My PC's Storage view maps your folders, checks all of these places for you, and moves anything you clear to the Recycle Bin, never deleting outright.</span></div><a class="btn solid" href="https://knowmypc.app/download/KnowMyPC-Setup.exe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>Try it free for 14 days</a></div>
+
+<h2 id="related">More fixes</h2>
+<ul><li><a href="/fix/vmmem-high-memory/">Vmmem using too much memory</a></li><li><a href="/fix/antimalware-service-executable-high-cpu/">Antimalware Service Executable using high CPU</a></li><li><a href="/fix/windows-modules-installer-worker-high-cpu/">Windows Modules Installer Worker using high CPU</a></li><li><a href="/fix/searchindexer-high-cpu/">Windows Search indexer using high CPU or disk</a></li><li><a href="/fix/port-in-use/">Find what's using a port on Windows</a></li></ul>
+</article>
+</main>
+
+<footer class="board site-foot">
+  <div class="wrap">
+    <div class="cols">
+      <div><a class="logo" href="/"><img src="/img/icon.png" alt="" width="32" height="32">Know My PC</a>
+        <p>Know why your Windows PC is slow, and what to do about it.</p></div>
+      <nav aria-label="Footer"><a href="https://knowmypc.app/download/KnowMyPC-Setup.exe">Download</a><a href="https://buy.polar.sh/polar_cl_Z5MfJ5nniF9V287WZVeucoI9FtJk9AQQvbdxF32x2Yl">Buy for $9.99</a><a href="/fix/">Fix guides</a><a href="/support.html">Support</a><a href="mailto:support@knowmypc.app">support@knowmypc.app</a></nav>
+      <nav aria-label="Legal"><a href="/privacy.html">Privacy policy</a><a href="/terms.html">Terms of sale</a><a href="https://polar.sh/raspinder-s/portal">Manage your purchase</a></nav>
+    </div>
+    <p class="legal">© 2026 Raspinder S. Payments are processed by Polar, our merchant of record. Windows is a trademark of Microsoft; Know My PC isn't affiliated with Microsoft.</p>
+  </div>
+</footer>
+</body>
+</html>

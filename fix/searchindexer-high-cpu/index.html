@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SearchIndexer.exe High CPU or Disk Usage: How to Fix It</title>
+<meta name="description" content="SearchIndexer.exe builds the index for Windows search. Why it gets busy, how to index fewer folders, and how to rebuild an index that's stuck.">
+<link rel="canonical" href="https://knowmypc.app/fix/searchindexer-high-cpu/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Know My PC">
+<meta property="og:title" content="SearchIndexer.exe High CPU or Disk Usage: How to Fix It">
+<meta property="og:description" content="SearchIndexer.exe builds the index for Windows search. Why it gets busy, how to index fewer folders, and how to rebuild an index that's stuck.">
+<meta property="og:url" content="https://knowmypc.app/fix/searchindexer-high-cpu/">
+<meta property="og:image" content="https://knowmypc.app/img/og.png">
+<meta property="og:image:alt" content="Windows Search indexer using high CPU or disk">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SearchIndexer.exe High CPU or Disk Usage: How to Fix It">
+<meta name="twitter:description" content="SearchIndexer.exe builds the index for Windows search. Why it gets busy, how to index fewer folders, and how to rebuild an index that's stuck.">
+<meta name="twitter:image" content="https://knowmypc.app/img/og.png">
+<meta name="twitter:image:alt" content="Windows Search indexer using high CPU or disk">
+<meta name="theme-color" content="#0e3b2e">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<link rel="preload" href="/fonts/adventor-bold.woff" as="font" type="font/woff" crossorigin>
+<link rel="stylesheet" href="/site.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "Windows Search indexer using high CPU or disk", "description": "SearchIndexer.exe builds the index for Windows search. Why it gets busy, how to index fewer folders, and how to rebuild an index that's stuck.", "dateModified": "2026-10-13", "author": {"@type": "Organization", "name": "Know My PC", "url": "https://knowmypc.app/"}, "mainEntityOfPage": "https://knowmypc.app/fix/searchindexer-high-cpu/", "image": "https://knowmypc.app/img/og.png"}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="board">
+  <header class="wrap site-head">
+    <a class="logo" href="/"><img src="/img/icon.png" alt="" width="32" height="32">Know My PC</a>
+    <nav aria-label="Main"><a href="/#features">Features</a><a href="/#pricing">Pricing</a><a href="/fix/" aria-current="page">Guides</a><a href="/support.html">Support</a><a class="btn primary" href="https://knowmypc.app/download/KnowMyPC-Setup.exe">Download</a></nav>
+  </header>
+
+  <div class="wrap page-hero"><p class="crumb"><a href="/fix/">Fix guides</a></p><h1>Windows Search indexer using high CPU or disk</h1><p>Windows is building its search index. It's busy after big file changes and settles down by itself, but you can make it do less.</p></div>
+</div>
+<main id="main" class="wrap doc">
+  <aside aria-label="On this page"><a href="#what">What it is</a><a href="#safe">Is it safe to end?</a><a href="#less">Index fewer folders</a><a href="#rebuild">If it never finishes</a><a href="#related">More fixes</a></aside>
+  <article>
+<p class="updated">Updated October 13, 2026</p>
+<h2 id="what">What it is</h2>
+<p><strong>SearchIndexer.exe</strong> (Microsoft Windows Search Indexer) keeps a list of your files and their contents so Start, File Explorer and Outlook can search quickly. <code>SearchProtocolHost.exe</code> and <code>SearchFilterHost.exe</code> are its helpers that read inside files.</p>
+<p>It's busy after you copy lots of files, add a drive, sync a big mailbox, or after a Windows update. With <strong>Enhanced</strong> search on, it indexes your whole PC instead of just your user folders.</p>
+<h2 id="safe">Is it safe to end?</h2>
+<p>Ending it does no harm, but Windows starts it again. Usually it settles within an hour. If it's busy every day, give it less to index.</p>
+<h2 id="less">Index fewer folders</h2>
+<ol><li>Windows 11: open Settings → Privacy &amp; security → <strong>Searching Windows</strong>. Windows 10: Settings → Search → Searching Windows.</li><li>Choose <strong>Classic</strong> instead of Enhanced. Classic indexes only your libraries and desktop.</li><li>Under <strong>Exclude folders from enhanced search</strong>, add folders full of files you never search: code projects, game libraries, virtual machine disks, backups.</li></ol>
+<h2 id="rebuild">If it never finishes</h2>
+<p>A damaged index can make it work forever. Search Start for <strong>Indexing Options</strong>, click <strong>Advanced</strong>, then <strong>Rebuild</strong>. Search results are incomplete until the rebuild finishes.</p>
+<p>If you never use Windows search, you can turn indexing off: open Services, double-click <strong>Windows Search</strong>, set Startup type to Disabled and click Stop. Searching in Start, File Explorer and Outlook becomes much slower.</p>
+
+<div class="contact-card" style="margin-top:48px"><div><b>See it live on your PC</b><span>Know My PC recognises search indexing when it's the cause and tells you it will settle on its own, so you know whether to wait or act.</span></div><a class="btn solid" href="https://knowmypc.app/download/KnowMyPC-Setup.exe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>Try it free for 14 days</a></div>
+
+<h2 id="related">More fixes</h2>
+<ul><li><a href="/fix/vmmem-high-memory/">Vmmem using too much memory</a></li><li><a href="/fix/antimalware-service-executable-high-cpu/">Antimalware Service Executable using high CPU</a></li><li><a href="/fix/windows-modules-installer-worker-high-cpu/">Windows Modules Installer Worker using high CPU</a></li><li><a href="/fix/c-drive-full/">What's taking up space on your C: drive</a></li><li><a href="/fix/port-in-use/">Find what's using a port on Windows</a></li></ul>
+</article>
+</main>
+
+<footer class="board site-foot">
+  <div class="wrap">
+    <div class="cols">
+      <div><a class="logo" href="/"><img src="/img/icon.png" alt="" width="32" height="32">Know My PC</a>
+        <p>Know why your Windows PC is slow, and what to do about it.</p></div>
+      <nav aria-label="Footer"><a href="https://knowmypc.app/download/KnowMyPC-Setup.exe">Download</a><a href="https://buy.polar.sh/polar_cl_Z5MfJ5nniF9V287WZVeucoI9FtJk9AQQvbdxF32x2Yl">Buy for $9.99</a><a href="/fix/">Fix guides</a><a href="/support.html">Support</a><a href="mailto:support@knowmypc.app">support@knowmypc.app</a></nav>
+      <nav aria-label="Legal"><a href="/privacy.html">Privacy policy</a><a href="/terms.html">Terms of sale</a><a href="https://polar.sh/raspinder-s/portal">Manage your purchase</a></nav>
+    </div>
+    <p class="legal">© 2026 Raspinder S. Payments are processed by Polar, our merchant of record. Windows is a trademark of Microsoft; Know My PC isn't affiliated with Microsoft.</p>
+  </div>
+</footer>
+</body>
+</html>
