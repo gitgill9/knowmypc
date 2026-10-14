@@ -16,11 +16,14 @@ from guides import GUIDES
 # ---------------------------------------------------------------------------
 SITE_URL = os.environ.get("KMP_SITE_URL", "https://knowmypc.app")
 SUPPORT_EMAIL = os.environ.get("KMP_SUPPORT_EMAIL", "support@knowmypc.app")
-CHECKOUT_URL = "https://buy.polar.sh/polar_cl_Z5MfJ5nniF9V287WZVeucoI9FtJk9AQQvbdxF32x2Yl"
+# Two plans: lifetime (one-time) and monthly (subscription). Same links as the app's license.rs.
+CHECKOUT_URL = "https://buy.polar.sh/polar_cl_Z5MfJ5nniF9V287WZVeucoI9FtJk9AQQvbdxF32x2Yl"  # lifetime
+CHECKOUT_MONTHLY_URL = ""  # TODO: the monthly product's checkout link from Polar
 PORTAL_URL = "https://polar.sh/raspinder-s/portal"
 DOWNLOAD_URL = os.environ.get("KMP_DOWNLOAD_URL", "https://knowmypc.app/download/KnowMyPC-Setup.exe")
-PRICE = "9.99"
-TRIAL_DAYS = 14
+PRICE = "29.99"  # lifetime
+PRICE_MONTHLY = "4.99"
+TRIAL_DAYS = 3
 REFUND_DAYS = 14
 SELLER = "Raspinder S"
 # Dates shown on pages and in the sitemap. Change a page's date only when its
@@ -28,7 +31,7 @@ SELLER = "Raspinder S"
 HOME_UPDATED = "2026-10-14"
 SUPPORT_UPDATED = "2026-10-14"
 PRIVACY_UPDATED = "2026-10-14"
-TERMS_UPDATED = "2026-10-12"
+TERMS_UPDATED = "2026-10-14"
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -96,7 +99,7 @@ def page(name, title, description, body, current="", head_extra="", og_type="web
     <div class="cols">
       <div><a class="logo" href="/"><img src="/img/icon.png" alt="" width="32" height="32">Know My PC</a>
         <p>Know why your Windows PC is slow, and what to do about it.</p></div>
-      <nav aria-label="Footer"><a href="{DOWNLOAD_URL}">Download</a><a href="{CHECKOUT_URL}">Buy for ${PRICE}</a><a href="/fix/">Fix guides</a><a href="/support.html">Support</a><a href="mailto:{SUPPORT_EMAIL}">{SUPPORT_EMAIL}</a></nav>
+      <nav aria-label="Footer"><a href="{DOWNLOAD_URL}">Download</a><a href="/#pricing">Pricing</a><a href="/fix/">Fix guides</a><a href="/support.html">Support</a><a href="mailto:{SUPPORT_EMAIL}">{SUPPORT_EMAIL}</a></nav>
       <nav aria-label="Legal"><a href="/privacy.html">Privacy policy</a><a href="/terms.html">Terms of sale</a><a href="{PORTAL_URL}">Manage your purchase</a></nav>
     </div>
     <p class="legal">© {datetime.date.today().year} {SELLER}. Payments are processed by Polar, our merchant of record. Windows is a trademark of Microsoft; Know My PC isn't affiliated with Microsoft.</p>
@@ -152,17 +155,21 @@ FAQ = [
     ("Windows says “Windows protected your PC” when I install it.",
      "That's SmartScreen, which warns about apps it hasn't seen many downloads of yet. Click <b>More info</b>, then <b>Run anyway</b>. The installer is the same file that's linked from this page."),
     ("How do updates work?",
-     "Know My PC checks for a new version once a day and shows a notice when one is ready. Nothing installs until you click <b>Update now</b>, and you can turn the checks off in Settings. Updates are included in your purchase."),
+     "Know My PC checks for a new version once a day and shows a notice when one is ready. Nothing installs until you click <b>Update now</b>, and you can turn the checks off in Settings. Updates are included with both plans."),
     ("Will it slow my PC down?",
      "It checks every 3 seconds by default, and you can make that 5 or 10 seconds in Settings. Know My PC appears in its own Apps list, so you can always see what it's using."),
     ("Which versions of Windows does it work on?",
      "Windows 11 and Windows 10 (64-bit). It uses Microsoft Edge WebView2, which Windows 11 already has; the installer adds it on Windows 10 if needed."),
     ("How does the free trial work?",
-     f"Everything is unlocked for {TRIAL_DAYS} days, no account or card needed. If you buy, paste the license key from your receipt email into Settings → License."),
+     f"Everything is unlocked for {TRIAL_DAYS} days, no account or card needed. After that you can still see what's slowing your PC down; fixing it from the app needs a plan. When you buy, paste the license key from your receipt email into Settings → License."),
+    ("Monthly or lifetime?",
+     f"Monthly is ${PRICE_MONTHLY} a month and you can cancel any time; when it ends, fixes pause and the diagnosis keeps working. Lifetime is ${PRICE} once and yours to keep, with every update. Both work on 2 PCs. If you'd use it for more than six months, lifetime costs less."),
+    ("How do I cancel my subscription?",
+     f'Open the <a href="{PORTAL_URL}">customer portal</a>, enter the email you subscribed with, and cancel. You keep everything until the end of the month you paid for.'),
     ("Can I use it on more than one PC?",
      "Yes. Each license works on 2 PCs. To move it, open Settings → License → Move to another PC, then activate the key on the new one."),
     ("What if it doesn't help?",
-     f"Email us within {REFUND_DAYS} days of buying and we'll refund you."),
+     f"Email us within {REFUND_DAYS} days of buying lifetime, or of your first monthly payment, and we'll refund you."),
     ("Is there a Mac version?",
      "No. Know My PC is built for Windows. On a Mac, iKnowMyMac does a similar job."),
 ]
@@ -202,7 +209,11 @@ def home():
                 "image": f"{SITE_URL}/img/overview.webp",
                 "url": f"{SITE_URL}/",
                 "downloadUrl": DOWNLOAD_URL,
-                "offers": {"@type": "Offer", "price": PRICE, "priceCurrency": "USD", "url": CHECKOUT_URL},
+                "offers": [
+                    {"@type": "Offer", "name": "Lifetime", "price": PRICE, "priceCurrency": "USD", "url": CHECKOUT_URL},
+                    {"@type": "Offer", "name": "Monthly", "price": PRICE_MONTHLY, "priceCurrency": "USD", "url": CHECKOUT_MONTHLY_URL,
+                     "priceSpecification": {"@type": "UnitPriceSpecification", "price": PRICE_MONTHLY, "priceCurrency": "USD", "billingDuration": "P1M"}},
+                ],
             },
             {
                 "@type": "FAQPage",
@@ -219,9 +230,9 @@ def home():
       <p class="sub">Know My PC watches what your Windows PC is doing, tells you in plain English what's slowing it down, and helps you fix it.</p>
       <div class="ctas">
         <a class="btn primary" href="{DOWNLOAD_URL}">{DOWNLOAD_ICON}Download free trial</a>
-        <a class="btn ghost" href="{CHECKOUT_URL}">Buy for ${PRICE}</a>
+        <a class="btn ghost" href="/#pricing">See pricing</a>
       </div>
-      <ul class="facts"><li>{TRIAL_DAYS}-day free trial</li><li>One-time purchase</li><li>Works on 2 PCs</li><li>Windows 10 and 11</li></ul>
+      <ul class="facts"><li>{TRIAL_DAYS}-day free trial</li><li>${PRICE_MONTHLY}/month or ${PRICE} lifetime</li><li>Works on 2 PCs</li><li>Windows 10 and 11</li></ul>
     </div>
     <div class="hero-shot"><img src="/img/overview-dark.webp" alt="Know My PC ranking two causes of slowness: Google Chrome using 41% of the CPU, and a Defender scan" width="1920" height="1200" fetchpriority="high"></div>
   </div>
@@ -253,7 +264,7 @@ def home():
     <div><h2 id="priv-h">Your PC's data stays on your PC</h2>
       <p>No account and no tracking. History lives in a file on your own drive, and you can export or delete it anytime. Here is every connection Know My PC makes:</p></div>
     <div class="ledger">
-      <div><b>License check</b><em>Weekly</em><span>Sends your license key to Polar to confirm it's valid. Nothing about your PC.</span></div>
+      <div><b>License check</b><em>Weekly, daily on monthly</em><span>Sends your license key to Polar to confirm it's valid. Nothing about your PC.</span></div>
       <div><b>Update check</b><em>Daily</em><span>Asks knowmypc.app whether a new version is out. Nothing about your PC is sent.</span></div>
       <div><b>Local AI status</b><em>This PC only</em><span>Asks Ollama and LM Studio on your own PC which models are loaded.</span></div>
       <div><b>Everything else</b><em>Never</em><span>Processes, files, history and settings never leave your PC.</span></div>
@@ -261,21 +272,37 @@ def home():
   </section>
 
   <section class="wrap pricing" id="pricing" aria-labelledby="price-h">
-    <div class="price-card">
-      <div>
-        <h2 id="price-h">One price. Yours to keep.</h2>
-        <p class="price" style="margin-top:18px">${PRICE}<small>one-time, USD</small></p>
-        <div class="ctas"><a class="btn solid" href="{CHECKOUT_URL}">Buy Know My PC</a><a class="btn outline" href="{DOWNLOAD_URL}">Try it free first</a></div>
-        <p class="fine">Sales tax or VAT is added at checkout where it applies.</p>
-      </div>
-      <ul>
-        <li>Every feature: diagnosis, history, storage, startup and developer tools</li>
-        <li>Use it on 2 PCs</li>
-        <li>{TRIAL_DAYS}-day free trial, no card needed</li>
-        <li>{REFUND_DAYS}-day refund if it doesn't help</li>
-        <li>No subscription and no account</li>
-      </ul>
+    <div class="price-head">
+      <h2 id="price-h">Try it free. Then pick a plan.</h2>
+      <p>Everything is unlocked for {TRIAL_DAYS} days, no card needed. <a href="{DOWNLOAD_URL}">Download the free trial</a>.</p>
     </div>
+    <div class="plans">
+      <div class="price-card">
+        <div>
+          <h3>Monthly</h3>
+          <p class="price">${PRICE_MONTHLY}<small>per month, USD</small></p>
+          <div class="ctas"><a class="btn outline" href="{CHECKOUT_MONTHLY_URL}">Subscribe</a></div>
+        </div>
+        <ul>
+          <li>Every feature: diagnosis, history, storage, startup and developer tools</li>
+          <li>Use it on 2 PCs</li>
+          <li>Cancel any time</li>
+        </ul>
+      </div>
+      <div class="price-card best">
+        <div>
+          <h3>Lifetime <span class="tag">Best value</span></h3>
+          <p class="price">${PRICE}<small>once, USD</small></p>
+          <div class="ctas"><a class="btn solid" href="{CHECKOUT_URL}">Buy lifetime</a></div>
+        </div>
+        <ul>
+          <li>Every feature, yours to keep</li>
+          <li>Use it on 2 PCs</li>
+          <li>Every future update included</li>
+        </ul>
+      </div>
+    </div>
+    <p class="fine plans-note">{REFUND_DAYS}-day refund if it doesn't help. No account needed. Sales tax or VAT is added at checkout where it applies.</p>
   </section>
 
   <section class="wrap home-guides" aria-labelledby="guides-h">
@@ -327,14 +354,16 @@ def support():
 
 <h2 id="license">Licenses and purchases</h2>
 <h3>Where's my license key?</h3>
-<p>It's in the receipt email from Polar, sent right after you buy. Check your spam folder. You can always find it again in the <a href="{PORTAL_URL}">customer portal</a>: enter the email you bought with.</p>
+<p>It's in the receipt email from Polar, sent right after you buy or subscribe. Check your spam folder. You can always find it again in the <a href="{PORTAL_URL}">customer portal</a>: enter the email you bought with.</p>
 <h3>Activating</h3>
 <ol><li>Open Know My PC and press <kbd>Ctrl</kbd> + <kbd>,</kbd> to open Settings.</li><li>Go to License, paste your key and click <strong>Activate</strong>.</li></ol>
-<p>Activation needs an internet connection once. After that, Know My PC checks the key about once a week and keeps working offline.</p>
+<p>Activation needs an internet connection once. After that, Know My PC checks a lifetime key about once a week and a monthly key about once a day, and keeps working offline for a while (30 days for lifetime, 7 for monthly).</p>
+<h3>Monthly subscriptions</h3>
+<p>Your subscription renews every month. To change your card or cancel, open the <a href="{PORTAL_URL}">customer portal</a> and enter the email you subscribed with. When a subscription ends, fixes pause and Settings → License shows <strong>Subscription ended</strong>; seeing what's slowing your PC down still works. Renew it and Know My PC unlocks again by itself within a day, or right away with <strong>Check again</strong>. To switch to lifetime, buy it and paste the new key.</p>
 <h3>Moving to a new PC</h3>
 <p>Each key works on 2 PCs. On the old PC, open Settings → License → <strong>Move to another PC</strong>, then activate the key on the new one. If the old PC is gone, you can remove it in the <a href="{PORTAL_URL}">customer portal</a>.</p>
 <h3>Refunds and invoices</h3>
-<p>Email us within {REFUND_DAYS} days of buying for a refund. Invoices and receipts are in the <a href="{PORTAL_URL}">customer portal</a>.</p>
+<p>Email us within {REFUND_DAYS} days of buying lifetime, or of your first monthly payment, for a refund. Invoices and receipts are in the <a href="{PORTAL_URL}">customer portal</a>.</p>
 
 <h2 id="install">Installing and updating</h2>
 <h3>“Windows protected your PC”</h3>
@@ -375,7 +404,7 @@ def privacy():
 
 <h2 id="app">The app</h2>
 <p><strong>What stays on your PC.</strong> Know My PC reads information about running processes, memory, drives, startup items, services, scheduled tasks, installed apps and network ports so it can explain what's slowing your PC down. It stores your settings, a history of slowdowns, a list of the changes it made, and a small log of errors in <code>%LOCALAPPDATA%\\Know My PC</code>. None of this is sent anywhere. You can export or delete it from Settings.</p>
-<p><strong>License checks.</strong> When you activate a license, the app sends your license key and your PC's name (so you can tell your PCs apart in the customer portal) to Polar, our payment provider. About once a week it sends the key again to confirm it's still valid. No other information about your PC is included. If the check can't reach Polar, the app keeps working and tries again later. Your license key is stored encrypted, so only your Windows account on that PC can read it.</p>
+<p><strong>License checks.</strong> When you activate a license, the app sends your license key and your PC's name (so you can tell your PCs apart in the customer portal) to Polar, our payment provider. About once a week (once a day for a monthly subscription) it sends the key again to confirm it's still valid. No other information about your PC is included. If the check can't reach Polar, the app keeps working and tries again later. Your license key is stored encrypted, so only your Windows account on that PC can read it.</p>
 <p><strong>Update checks.</strong> About once a day, and whenever you click Check now in Settings, the app downloads a small file from <code>knowmypc.app</code> that says what the newest version is. The request contains nothing about you or your PC beyond what any web request carries, such as your IP address. You can turn these checks off in Settings. If you choose to update, the installer is downloaded from the same site.</p>
 <p><strong>Support info.</strong> Settings → About → Copy support info copies your app and Windows version, basic hardware details and recent log lines to your clipboard. Nothing is sent until you paste it into an email yourself. It never includes your license key.</p>
 <p><strong>Local connections.</strong> To show which AI models are loaded, the app asks Ollama and LM Studio on your own PC (<code>localhost</code>). These requests never leave your PC.</p>
@@ -405,13 +434,16 @@ def terms():
     article = f"""
 <p class="updated">Last updated {human_date(TERMS_UPDATED)}</p>
 <h2 id="license">Your license</h2>
-<p>When you buy Know My PC, you get a personal, non-transferable license to use it on up to 2 PCs that you own or control. The software is licensed, not sold. You may not resell, share or publish license keys, or try to bypass the license check.</p>
+<p>When you buy or subscribe to Know My PC, you get a personal, non-transferable license to use it on up to 2 PCs that you own or control. A lifetime license doesn't expire. A monthly license lasts while your subscription is active. The software is licensed, not sold. You may not resell, share or publish license keys, or try to bypass the license check.</p>
 
 <h2 id="trial">Trial</h2>
-<p>You can use Know My PC free for {TRIAL_DAYS} days to decide whether it's right for you.</p>
+<p>You can use Know My PC free for {TRIAL_DAYS} days to decide whether it's right for you. After the trial, the app keeps showing what's slowing your PC down; the actions that change your PC need a license.</p>
 
 <h2 id="payments">Payments and refunds</h2>
-<p>Orders are processed by Polar Software, Inc., our merchant of record, which also handles sales tax and VAT. Prices are one-time and shown in US dollars. If Know My PC doesn't work for you, email <a href="mailto:{SUPPORT_EMAIL}">{SUPPORT_EMAIL}</a> within {REFUND_DAYS} days of purchase for a full refund. A refunded license key stops working.</p>
+<p>Orders are processed by Polar Software, Inc., our merchant of record, which also handles sales tax and VAT. Prices are shown in US dollars. There are two plans:</p>
+<ul><li><strong>Monthly (${PRICE_MONTHLY} a month).</strong> Billed every month until you cancel. Cancel any time in the <a href="{PORTAL_URL}">customer portal</a>; you keep access until the end of the month you've paid for, and we don't refund partial months. When the subscription ends, the license key stops unlocking fixes.</li>
+<li><strong>Lifetime (${PRICE} once).</strong> One payment, no renewals, including every future update of Know My PC.</li></ul>
+<p>If Know My PC doesn't work for you, email <a href="mailto:{SUPPORT_EMAIL}">{SUPPORT_EMAIL}</a> within {REFUND_DAYS} days of buying lifetime, or of your first monthly payment, for a full refund. A refunded license key stops working. If you bought Know My PC before the monthly plan existed, your license is a lifetime license.</p>
 
 <h2 id="use">Using the software</h2>
 <p>Know My PC can end processes, change startup items and move files to the Recycle Bin when you ask it to. Check what you're closing or removing first: save your work before ending an app, and back up anything important.</p>
