@@ -194,3 +194,12 @@ code { font-family: "Cascadia Mono", Consolas, ui-monospace, monospace; font-siz
 .guide-list span { display: block; color: var(--ink-3); font-size: 15px; margin-top: 6px; }
 @media (max-width: 900px) { .home-guides { grid-template-columns: 1fr; gap: 24px; } }
 .doc article { min-width: 0; }
+
+/* What's new */
+.whats-new { padding: 0 0 96px; display: grid; grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr); gap: 56px; }
+.whats-new p { color: var(--ink-2); margin-top: 16px; max-width: 34ch; }
+.whats-new ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.whats-new li { background: var(--panel); border: 1px solid var(--line-2); border-top: 3px solid var(--pad); border-radius: 14px; padding: 18px 20px; }
+.whats-new b { display: block; font: 700 18px/1.25 var(--display); }
+.whats-new span { display: block; color: var(--ink-3); font-size: 15px; margin-top: 6px; }
+@media (max-width: 900px) { .whats-new { grid-template-columns: 1fr; gap: 24px; } }
