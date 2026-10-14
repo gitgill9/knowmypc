@@ -113,13 +113,20 @@ p { margin: 0; }
 
 /* ---------- Pricing ---------- */
 .pricing { padding: 0 0 96px; }
-.price-card { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: center; background: var(--panel); border: 1px solid var(--line-2); border-radius: 18px; padding: 40px; border-top: 5px solid var(--pad); }
-.price { font: 700 72px/1 var(--display); letter-spacing: -0.03em; }
+.price-head { margin-bottom: 28px; }
+.price-head p { color: var(--ink-3); margin-top: 10px; }
+.plans { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.price-card { display: grid; gap: 28px; align-content: start; background: var(--panel); border: 1px solid var(--line-2); border-radius: 18px; padding: 36px; border-top: 5px solid var(--line); }
+.price-card.best { border-top-color: var(--pad); }
+.price-card h3 { font: 700 22px var(--display); display: flex; align-items: center; gap: 10px; }
+.price-card .tag { font: 600 12.5px var(--font); padding: 3px 9px; border-radius: 999px; background: color-mix(in srgb, var(--pad) 22%, transparent); color: var(--ink); }
+.price { font: 700 56px/1 var(--display); letter-spacing: -0.03em; margin-top: 16px; }
+.plans-note { margin-top: 18px; }
 .price small { font: 500 17px var(--font); color: var(--ink-3); letter-spacing: 0; margin-left: 6px; }
 .price-card ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
 .price-card li { padding-left: 26px; position: relative; }
 .price-card li::before { content: ""; position: absolute; left: 0; top: .35em; width: 14px; height: 9px; border-left: 2.5px solid var(--action); border-bottom: 2.5px solid var(--action); transform: rotate(-45deg); }
-.price-card .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+.price-card .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
 .price-card .btn.outline { border-color: var(--line); color: var(--ink); }
 .price-card .btn.outline:hover { border-color: var(--ink-3); }
 .fine { font-size: 14px; color: var(--ink-3); margin-top: 14px; }
@@ -168,7 +175,7 @@ code { font-family: "Cascadia Mono", Consolas, ui-monospace, monospace; font-siz
 .updated { color: var(--ink-3); font-size: 15px; }
 
 @media (max-width: 900px) {
-  .hero, .problem, .devs .grid, .privacy-sec, .price-card, .faq, .doc { grid-template-columns: 1fr; gap: 32px; }
+  .hero, .problem, .devs .grid, .privacy-sec, .plans, .faq, .doc { grid-template-columns: 1fr; gap: 32px; }
   .problem:nth-child(even) .copy { order: 0; }
   .hero { padding-top: 28px; }
   .site-head nav a:not(.btn) { display: none; }
