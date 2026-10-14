@@ -25,9 +25,10 @@ REFUND_DAYS = 14
 SELLER = "Raspinder S"
 # Dates shown on pages and in the sitemap. Change a page's date only when its
 # content changes; Google treats dates that move on every build as fake freshness.
-HOME_UPDATED = "2026-10-13"
-SUPPORT_UPDATED = "2026-10-12"
-LEGAL_UPDATED = "2026-10-12"  # privacy policy and terms
+HOME_UPDATED = "2026-10-14"
+SUPPORT_UPDATED = "2026-10-14"
+PRIVACY_UPDATED = "2026-10-14"
+TERMS_UPDATED = "2026-10-12"
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -120,6 +121,7 @@ PROBLEMS = [
      "Every slowdown is recorded with the apps responsible, so you can see it was Chrome and a Defender scan, not your game, that ate the headroom.",
      ["A 7-day CPU and memory timeline with overloads marked",
       "Game boost lowers other apps' priority while you play, then puts them back",
+      "The Graphics tab shows whether your graphics card or your processor is holding your game back",
       "Suggestions drawn from your own slowdowns, not generic tips"],
      "Know My PC History screen: a 24-hour CPU and memory chart with two slowdowns, each listing the apps responsible"),
     ("My C: drive is full.", "storage", "Find the space, then get it back safely",
@@ -135,11 +137,22 @@ PROBLEMS = [
      "Know My PC Startup screen: startup apps with on/off switches, who made each one and how much memory it is using"),
 ]
 
+NEW = [
+    ("Updates itself", "When a new version is ready, you'll see a notice. One click installs it, and every update is signed so only real Know My PC releases install."),
+    ("More health checks", "Spots a busy network, slow drive response, a processor held back by heat or power settings, slow startup, apps that crash or freeze, and drives that report problems."),
+    ("Changes made, with Undo", "Settings → Changes made lists everything Know My PC changed on your PC. Startup and graphics changes undo with one click; files are in the Recycle Bin."),
+    ("Every app has its own color", "Each app gets its own soft color in the Apps, Graphics and Developer lists, so you can follow it from one refresh to the next."),
+    ("A welcome and a weekly summary", "A short tour when you first open it, and a weekly summary of your PC's slowdowns."),
+    ("Faster, quieter, easier to get help", "Fixes now use Windows directly, it does less while hidden in the tray, and Copy support info puts everything we need in one paste."),
+]
+
 FAQ = [
     ("Is it safe to use?",
-     "Know My PC never ends Windows' own processes, never deletes anything permanently (it only moves files to the Recycle Bin), and won't touch the Windows or Program Files folders. Startup changes use the same switch Task Manager uses."),
+     "Know My PC never ends Windows' own processes, never deletes anything permanently (it only moves files to the Recycle Bin), and won't touch the Windows or Program Files folders. Startup changes use the same switch Task Manager uses, and Settings → Changes made lists everything it changed, with Undo."),
     ("Windows says “Windows protected your PC” when I install it.",
      "That's SmartScreen, which warns about apps it hasn't seen many downloads of yet. Click <b>More info</b>, then <b>Run anyway</b>. The installer is the same file that's linked from this page."),
+    ("How do updates work?",
+     "Know My PC checks for a new version once a day and shows a notice when one is ready. Nothing installs until you click <b>Update now</b>, and you can turn the checks off in Settings. Updates are included in your purchase."),
     ("Will it slow my PC down?",
      "It checks every 3 seconds by default, and you can make that 5 or 10 seconds in Settings. Know My PC appears in its own Apps list, so you can always see what it's using."),
     ("Which versions of Windows does it work on?",
@@ -167,6 +180,7 @@ def home():
       <div class="shot"><img src="/img/{img}.webp" alt="{alt}" width="1920" height="1200" loading="lazy" decoding="async"></div>
     </section>""" for i, (q, img, h, p, bullets, alt) in enumerate(PROBLEMS))
 
+    new_items = "".join(f"<li><b>{h}</b><span>{p}</span></li>" for h, p in NEW)
     guide_items = "".join(f'<li><a href="{url_for("fix/" + g["slug"])}"><b>{g["h1"]}</b><span>{g["summary"]}</span></a></li>' for g in GUIDES)
     faq = "".join(f"<details><summary><h3>{q}</h3></summary><p>{a}</p></details>" for q, a in FAQ)
 
@@ -217,6 +231,11 @@ def home():
   <div class="wrap problems" id="features">{problems}
   </div>
 
+  <section class="wrap whats-new" id="new" aria-labelledby="new-h">
+    <div><h2 id="new-h">New in version 0.2</h2><p>Know My PC keeps getting better, and updates are free.</p></div>
+    <ul>{new_items}</ul>
+  </section>
+
   <section class="board devs" aria-labelledby="dev-h">
     <div class="wrap grid">
       <div><h2 id="dev-h">Built for developers too</h2>
@@ -235,6 +254,7 @@ def home():
       <p>No account and no tracking. History lives in a file on your own drive, and you can export or delete it anytime. Here is every connection Know My PC makes:</p></div>
     <div class="ledger">
       <div><b>License check</b><em>Weekly</em><span>Sends your license key to Polar to confirm it's valid. Nothing about your PC.</span></div>
+      <div><b>Update check</b><em>Daily</em><span>Asks knowmypc.app whether a new version is out. Nothing about your PC is sent.</span></div>
       <div><b>Local AI status</b><em>This PC only</em><span>Asks Ollama and LM Studio on your own PC which models are loaded.</span></div>
       <div><b>Everything else</b><em>Never</em><span>Processes, files, history and settings never leave your PC.</span></div>
     </div>
@@ -291,14 +311,14 @@ def doc(name, title, description, h1, lede, toc, article, current=""):
 
 
 def support():
-    toc = [("contact", "Contact us"), ("license", "Licenses and purchases"), ("install", "Installing"), ("using", "Using Know My PC"), ("uninstall", "Uninstalling")]
+    toc = [("contact", "Contact us"), ("license", "Licenses and purchases"), ("install", "Installing and updating"), ("using", "Using Know My PC"), ("uninstall", "Uninstalling")]
     article = f"""
 <div class="contact-card"><div><b>{SUPPORT_EMAIL}</b><span>Usually answered within 2 business days.</span></div><a class="btn solid" href="mailto:{SUPPORT_EMAIL}?subject=Know%20My%20PC%20help">Email support</a></div>
 
 <h2 id="contact">Contact us</h2>
 <p>Email <a href="mailto:{SUPPORT_EMAIL}">{SUPPORT_EMAIL}</a>. These help us answer in one reply:</p>
 <ul>
-  <li>Your Know My PC version (Settings → About) and Windows version</li>
+  <li>The text from Settings → About → <strong>Copy support info</strong> (your version, Windows version and recent log lines; your license key isn't included)</li>
   <li>What you expected, and what happened instead</li>
   <li>A screenshot, if something looks wrong</li>
   <li>For history questions, the file from Settings → History and data → Export JSON</li>
@@ -316,15 +336,19 @@ def support():
 <h3>Refunds and invoices</h3>
 <p>Email us within {REFUND_DAYS} days of buying for a refund. Invoices and receipts are in the <a href="{PORTAL_URL}">customer portal</a>.</p>
 
-<h2 id="install">Installing</h2>
+<h2 id="install">Installing and updating</h2>
 <h3>“Windows protected your PC”</h3>
 <p>SmartScreen shows this for apps it hasn't seen many downloads of yet. Click <strong>More info</strong>, then <strong>Run anyway</strong>. Only run installers you downloaded from this site.</p>
 <h3>It says WebView2 is missing</h3>
 <p>Windows 11 includes it. On Windows 10, install the <a href="https://developer.microsoft.com/microsoft-edge/webview2/">Microsoft Edge WebView2 Runtime</a>, then run the installer again.</p>
+<h3>Updating to a new version</h3>
+<p>Know My PC checks for updates once a day and shows a notice when one is ready. Click <strong>Update now</strong> and it closes, updates and opens again by itself; your history, settings and license stay as they are. To check right away, open Settings → About → <strong>Check now</strong>. You can turn automatic checks off there too.</p>
 
 <h2 id="using">Using Know My PC</h2>
 <h3>Windows asks for permission when I click something</h3>
 <p>Some changes need administrator rights: closing a game that runs as administrator, or changing a startup app for all users. Know My PC asks Windows, and Windows asks you. Click <strong>Yes</strong> to continue.</p>
+<h3>Undoing a change</h3>
+<p>Settings → <strong>Changes made</strong> lists everything Know My PC changed: apps it ended, startup apps it switched off, graphics settings and files it moved. Click <strong>Undo</strong> next to a startup or graphics change to put it back. Files it removed are in the Recycle Bin, where you can restore them.</p>
 <h3>A game won't close</h3>
 <p>Some anti-cheat systems block every other program from closing their game, even with administrator rights. Quit from inside the game or press <kbd>Alt</kbd> + <kbd>F4</kbd>.</p>
 <h3>History is empty or has gaps</h3>
@@ -345,13 +369,15 @@ def support():
 def privacy():
     toc = [("summary", "In short"), ("app", "The app"), ("purchases", "Purchases"), ("site", "This website"), ("support-mail", "Support email"), ("rights", "Your choices"), ("changes", "Changes")]
     article = f"""
-<p class="updated">Last updated {human_date(LEGAL_UPDATED)}</p>
+<p class="updated">Last updated {human_date(PRIVACY_UPDATED)}</p>
 <h2 id="summary">In short</h2>
-<p>Know My PC is built to keep your information on your PC. It has no account system and no analytics, and it doesn't sell or share data. This policy explains the few things that do leave your PC.</p>
+<p>Know My PC is built to keep your information on your PC. It has no account system and no analytics, and it doesn't sell or share data. This policy explains the few things that do leave your PC: license checks with Polar, our payment provider, and a daily check on knowmypc.app for new versions.</p>
 
 <h2 id="app">The app</h2>
-<p><strong>What stays on your PC.</strong> Know My PC reads information about running processes, memory, drives, startup items, services, scheduled tasks, installed apps and network ports so it can explain what's slowing your PC down. It stores your settings and a history of slowdowns in <code>%LOCALAPPDATA%\\Know My PC</code>. None of this is sent anywhere. You can export or delete it from Settings.</p>
-<p><strong>License checks.</strong> When you activate a license, the app sends your license key and your PC's name (so you can tell your PCs apart in the customer portal) to Polar, our payment provider. About once a week it sends the key again to confirm it's still valid. No other information about your PC is included.</p>
+<p><strong>What stays on your PC.</strong> Know My PC reads information about running processes, memory, drives, startup items, services, scheduled tasks, installed apps and network ports so it can explain what's slowing your PC down. It stores your settings, a history of slowdowns, a list of the changes it made, and a small log of errors in <code>%LOCALAPPDATA%\\Know My PC</code>. None of this is sent anywhere. You can export or delete it from Settings.</p>
+<p><strong>License checks.</strong> When you activate a license, the app sends your license key and your PC's name (so you can tell your PCs apart in the customer portal) to Polar, our payment provider. About once a week it sends the key again to confirm it's still valid. No other information about your PC is included. If the check can't reach Polar, the app keeps working and tries again later. Your license key is stored encrypted, so only your Windows account on that PC can read it.</p>
+<p><strong>Update checks.</strong> About once a day, and whenever you click Check now in Settings, the app downloads a small file from <code>knowmypc.app</code> that says what the newest version is. The request contains nothing about you or your PC beyond what any web request carries, such as your IP address. You can turn these checks off in Settings. If you choose to update, the installer is downloaded from the same site.</p>
+<p><strong>Support info.</strong> Settings → About → Copy support info copies your app and Windows version, basic hardware details and recent log lines to your clipboard. Nothing is sent until you paste it into an email yourself. It never includes your license key.</p>
 <p><strong>Local connections.</strong> To show which AI models are loaded, the app asks Ollama and LM Studio on your own PC (<code>localhost</code>). These requests never leave your PC.</p>
 <p><strong>Notifications.</strong> Overload alerts are Windows notifications created on your PC.</p>
 
@@ -359,7 +385,7 @@ def privacy():
 <p>Payments are handled by Polar Software, Inc. as merchant of record. Polar collects your email, payment and billing details to process the order, issue your license key and handle taxes. We receive your email address and order details from Polar to provide support. We never see your full card number. Polar's privacy policy is at <a href="https://polar.sh/legal/privacy">polar.sh/legal/privacy</a>.</p>
 
 <h2 id="site">This website</h2>
-<p>This site has no cookies, analytics or trackers. It's hosted on GitHub Pages, which may log your IP address for security and operations; see GitHub's privacy statement.</p>
+<p>This site has no cookies, analytics or trackers. It's hosted on GitHub Pages, which may log your IP address for security and operations, including when the app checks for updates; see GitHub's privacy statement.</p>
 
 <h2 id="support-mail">Support email</h2>
 <p>If you email us, we use your message and address only to help you, and we keep it as long as needed to support your purchase.</p>
@@ -370,14 +396,14 @@ def privacy():
 <h2 id="changes">Changes</h2>
 <p>If this policy changes, we'll update the date at the top. Questions: <a href="mailto:{SUPPORT_EMAIL}">{SUPPORT_EMAIL}</a>.</p>
 """
-    return doc("privacy", "Privacy policy | Know My PC", "Know My PC keeps your PC's data on your PC. What the app stores, the one connection it makes for license checks, and how purchases are handled.",
+    return doc("privacy", "Privacy policy | Know My PC", "Know My PC keeps your PC's data on your PC. What the app stores, its license and update checks, and how purchases are handled.",
                "Privacy policy", "Your PC's data stays on your PC. Here's exactly what that means.", toc, article)
 
 
 def terms():
     toc = [("license", "Your license"), ("trial", "Trial"), ("payments", "Payments and refunds"), ("use", "Using the software"), ("warranty", "No warranty"), ("liability", "Liability"), ("contact", "Contact")]
     article = f"""
-<p class="updated">Last updated {human_date(LEGAL_UPDATED)}</p>
+<p class="updated">Last updated {human_date(TERMS_UPDATED)}</p>
 <h2 id="license">Your license</h2>
 <p>When you buy Know My PC, you get a personal, non-transferable license to use it on up to 2 PCs that you own or control. The software is licensed, not sold. You may not resell, share or publish license keys, or try to bypass the license check.</p>
 
@@ -480,7 +506,7 @@ def main():
             f.write(html)
     # Each page's own date, so lastmod changes only when that page's content does.
     newest_guide = max(g["updated"] for g in GUIDES)
-    lastmod = {"index": max(HOME_UPDATED, newest_guide), "support": SUPPORT_UPDATED, "privacy": LEGAL_UPDATED, "terms": LEGAL_UPDATED, "fix": newest_guide}
+    lastmod = {"index": max(HOME_UPDATED, newest_guide), "support": SUPPORT_UPDATED, "privacy": PRIVACY_UPDATED, "terms": TERMS_UPDATED, "fix": newest_guide}
     lastmod.update({"fix/" + g["slug"]: g["updated"] for g in GUIDES})
     urls = "".join(f"<url><loc>{SITE_URL}{url_for(n)}</loc><lastmod>{lastmod[n]}</lastmod></url>" for n in pages)
     with open(os.path.join(HERE, "sitemap.xml"), "w", encoding="utf-8") as f:
