@@ -18,7 +18,7 @@ SITE_URL = os.environ.get("KMP_SITE_URL", "https://knowmypc.app")
 SUPPORT_EMAIL = os.environ.get("KMP_SUPPORT_EMAIL", "support@knowmypc.app")
 # Two plans: lifetime (one-time) and monthly (subscription). Same links as the app's license.rs.
 CHECKOUT_URL = "https://buy.polar.sh/polar_cl_Z5MfJ5nniF9V287WZVeucoI9FtJk9AQQvbdxF32x2Yl"  # lifetime
-CHECKOUT_MONTHLY_URL = ""  # TODO: the monthly product's checkout link from Polar
+CHECKOUT_MONTHLY_URL = "https://buy.polar.sh/polar_cl_8TKEXFN8KTOFvpyXeHl1g46GeSqns3z01ZvWP1AOa8a"  # monthly
 PORTAL_URL = "https://polar.sh/raspinder-s/portal"
 DOWNLOAD_URL = os.environ.get("KMP_DOWNLOAD_URL", "https://knowmypc.app/download/KnowMyPC-Setup.exe")
 PRICE = "29.99"  # lifetime
