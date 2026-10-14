@@ -1,0 +1,11 @@
+{
+  "version": "0.2.0",
+  "notes": "- Know My PC now updates itself. You'll see a notice when a new version is ready.\n- A short welcome when you first open it, and a weekly summary of your PC's slowdowns.\n- New checks: busy network, slow drive response, a processor held back by heat or power settings, slow startup, apps that crash or freeze, and drives that report problems.\n- Settings → Changes made lists everything Know My PC changed, with Undo.\n- Copy support info in Settings → About makes asking for help quicker.\n- Faster and quieter: fixes now use Windows directly, and it does less while hidden in the tray.",
+  "pub_date": "2026-10-14T04:34:30Z",
+  "platforms": {
+    "windows-x86_64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSSmZxVDBITWlsL1FHbmNRT3ROWlZvOTdnTzl4K2crOHAvZHRzd2xuWjNlcTBNalJnRWlIZzlzdW5TNHo3UGhpT3lYVmh2aHUvTzdlVzFHMlljdmExdlZFSEFBbi8zUEFVPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkxOTUyNDY1CWZpbGU6S25vdyBNeSBQQ18wLjIuMF94NjQtc2V0dXAuZXhlCXZlcnNpb246MC4yLjAKRFZ0a2kzODlkbmJHWlJtT05mSUpuYnNEVUtBOXNZaXdYb1VjdjlxdWNJaEdTNU4wRkV3bGM2bXhia0V4bStaWFRFeE5ZUm5zL0VBd1lKcU1sd2hEQ3c9PQo=",
+      "url": "https://knowmypc.app/download/KnowMyPC-Setup.exe"
+    }
+  }
+}
