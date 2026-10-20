@@ -1,0 +1,11 @@
+{
+    "version":  "0.2.1",
+    "notes":  "- New: Free up space in Storage. Pick what to clear (temporary files, crash dumps, browser caches, the Recycle Bin, old Windows Update downloads) and see how much you\u0027ll get back before anything is deleted.\n- The Graphics tab no longer asks you to update a driver that\u0027s already up to date.\n- If your graphics driver crashes even though it\u0027s current, the advice now points at the likely cause (overclocks, heat or power).",
+    "pub_date":  "2026-10-20T05:21:42Z",
+    "platforms":  {
+                      "windows-x86_64":  {
+                                             "signature":  "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUQ1FSaHB6eEk5aGtuVm8vM1NwdkhPanFKTzRWMXB5WkRzWkh4LzVCanpRQm1FK3ZZenRyWXM4YVFaOE00eVVNRXhQbHFVYzhheTZCYzlyU2dXMGtEdHhUa3pnMDEzbWdvPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyNDczNjk1CWZpbGU6S25vdyBNeSBQQ18wLjIuMV94NjQtc2V0dXAuZXhlCXZlcnNpb246MC4yLjEKNmtDMklRM1d1eW0xMVpYZWMvYUNzQm9iM1ExQXBIdkJFR2hWck5jMnZBanBCdVI3V3o0MGV4am11ajBsSlZwK3BmTWJMa2FWVWlmTFdHNjAweWpCQlE9PQo=",
+                                             "url":  "https://knowmypc.app/download/KnowMyPC-Setup.exe"
+                                         }
+                  }
+}
