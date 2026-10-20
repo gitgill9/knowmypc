@@ -147,7 +147,7 @@ sfc /scannow</code></pre>
 <li><strong>Ollama models.</strong> Stored in <code>%UserProfile%\.ollama\models</code>. Run <code>ollama list</code> to see them and <code>ollama rm &lt;model&gt;</code> to delete one.</li>
 </ul>"""),
         ],
-        "app": "Know My PC's Storage view maps your folders, checks all of these places for you, and moves anything you clear to the Recycle Bin, never deleting outright.",
+        "app": "Know My PC's Storage view maps your folders, checks all of these places for you, and shows how much you'll get back before Free up space clears anything.",
     },
     {
         "slug": "port-in-use",

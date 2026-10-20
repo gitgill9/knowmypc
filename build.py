@@ -131,7 +131,7 @@ PROBLEMS = [
      "A map of your folders shows what's big at a glance. Know My PC knows where Windows hides space: update caches, temp files, WSL disks, game libraries, model files.",
      ["Shows which folders are safe to clear and which hold your own files",
       "Installed apps sorted by size, with one-click uninstall",
-      "Only ever moves things to the Recycle Bin. Windows and Program Files are off-limits."],
+      "Free up space clears temp files and caches only after showing you how much you'll get back. Windows and Program Files are off-limits."],
      "Know My PC Storage screen: space that is safe to clear, such as temp files and the Chrome cache, above a clickable map of folders"),
     ("It takes forever to start.", "startup", "See what starts with Windows, and switch it off",
      "Every startup app, which company made it, and whether it's using memory right now. Switching one off works exactly like Task Manager, and you can switch it back on anytime.",
@@ -141,6 +141,7 @@ PROBLEMS = [
 ]
 
 NEW = [
+    ("Free up space", "New in 0.2.1: pick what to clear (temporary files, crash dumps, browser caches, the Recycle Bin, old Windows Update downloads) and see how much you'll get back before anything is removed."),
     ("Updates itself", "When a new version is ready, you'll see a notice. One click installs it, and every update is signed so only real Know My PC releases install."),
     ("More health checks", "Spots a busy network, slow drive response, a processor held back by heat or power settings, slow startup, apps that crash or freeze, and drives that report problems."),
     ("Changes made, with Undo", "Settings → Changes made lists everything Know My PC changed on your PC. Startup and graphics changes undo with one click; files are in the Recycle Bin."),
@@ -151,7 +152,7 @@ NEW = [
 
 FAQ = [
     ("Is it safe to use?",
-     "Know My PC never ends Windows' own processes, never deletes anything permanently (it only moves files to the Recycle Bin), and won't touch the Windows or Program Files folders. Startup changes use the same switch Task Manager uses, and Settings → Changes made lists everything it changed, with Undo."),
+     "Know My PC never ends Windows' own processes, only removes files you choose (files from your own folders go to the Recycle Bin; Free up space clears temp files and caches only after you confirm), and won't touch the Windows or Program Files folders. Startup changes use the same switch Task Manager uses, and Settings → Changes made lists everything it changed, with Undo."),
     ("Windows says “Windows protected your PC” when I install it.",
      "That's SmartScreen, which warns about apps it hasn't seen many downloads of yet. Click <b>More info</b>, then <b>Run anyway</b>. The installer is the same file that's linked from this page."),
     ("How do updates work?",
@@ -161,9 +162,9 @@ FAQ = [
     ("Which versions of Windows does it work on?",
      "Windows 11 and Windows 10 (64-bit). It uses Microsoft Edge WebView2, which Windows 11 already has; the installer adds it on Windows 10 if needed."),
     ("How does the free trial work?",
-     f"Everything is unlocked for {TRIAL_DAYS} days, no account or card needed. After that you can still see what's slowing your PC down; fixing it from the app needs a plan. When you buy, paste the license key from your receipt email into Settings → License."),
+     f"Everything is unlocked for {TRIAL_DAYS} days, no account or card needed. After that, the \"Why it's slow\" screen stays free; History, alerts, Apps, Storage, Startup, Graphics and every fix need a plan. When you buy, paste the license key from your receipt email into Settings → License."),
     ("Monthly or lifetime?",
-     f"Monthly is ${PRICE_MONTHLY} a month and you can cancel any time; when it ends, fixes pause and the diagnosis keeps working. Lifetime is ${PRICE} once and yours to keep, with every update. Both work on 2 PCs. If you'd use it for more than six months, lifetime costs less."),
+     f"Monthly is ${PRICE_MONTHLY} a month and you can cancel any time; when it ends, everything except \"Why it's slow\" pauses. Lifetime is ${PRICE} once and yours to keep, with every update. Both work on 2 PCs. If you'd use it for more than six months, lifetime costs less."),
     ("How do I cancel my subscription?",
      f'Open the <a href="{PORTAL_URL}">customer portal</a>, enter the email you subscribed with, and cancel. You keep everything until the end of the month you paid for.'),
     ("Can I use it on more than one PC?",
@@ -377,7 +378,7 @@ def support():
 <h3>Windows asks for permission when I click something</h3>
 <p>Some changes need administrator rights: closing a game that runs as administrator, or changing a startup app for all users. Know My PC asks Windows, and Windows asks you. Click <strong>Yes</strong> to continue.</p>
 <h3>Undoing a change</h3>
-<p>Settings → <strong>Changes made</strong> lists everything Know My PC changed: apps it ended, startup apps it switched off, graphics settings and files it moved. Click <strong>Undo</strong> next to a startup or graphics change to put it back. Files it removed are in the Recycle Bin, where you can restore them.</p>
+<p>Settings → <strong>Changes made</strong> lists everything Know My PC changed: apps it ended, startup apps it switched off, graphics settings and files it moved. Click <strong>Undo</strong> next to a startup or graphics change to put it back. Files it moved from your own folders are in the Recycle Bin, where you can restore them. Temp files and caches cleared with Free up space can't be undone.</p>
 <h3>A game won't close</h3>
 <p>Some anti-cheat systems block every other program from closing their game, even with administrator rights. Quit from inside the game or press <kbd>Alt</kbd> + <kbd>F4</kbd>.</p>
 <h3>History is empty or has gaps</h3>
@@ -437,7 +438,7 @@ def terms():
 <p>When you buy or subscribe to Know My PC, you get a personal, non-transferable license to use it on up to 2 PCs that you own or control. A lifetime license doesn't expire. A monthly license lasts while your subscription is active. The software is licensed, not sold. You may not resell, share or publish license keys, or try to bypass the license check.</p>
 
 <h2 id="trial">Trial</h2>
-<p>You can use Know My PC free for {TRIAL_DAYS} days to decide whether it's right for you. After the trial, the app keeps showing what's slowing your PC down; the actions that change your PC need a license.</p>
+<p>You can use Know My PC free for {TRIAL_DAYS} days to decide whether it's right for you. After the trial, the "Why it's slow" screen stays free; everything else needs a license.</p>
 
 <h2 id="payments">Payments and refunds</h2>
 <p>Orders are processed by Polar Software, Inc., our merchant of record, which also handles sales tax and VAT. Prices are shown in US dollars. There are two plans:</p>
@@ -446,7 +447,7 @@ def terms():
 <p>If Know My PC doesn't work for you, email <a href="mailto:{SUPPORT_EMAIL}">{SUPPORT_EMAIL}</a> within {REFUND_DAYS} days of buying lifetime, or of your first monthly payment, for a full refund. A refunded license key stops working. If you bought Know My PC before the monthly plan existed, your license is a lifetime license.</p>
 
 <h2 id="use">Using the software</h2>
-<p>Know My PC can end processes, change startup items and move files to the Recycle Bin when you ask it to. Check what you're closing or removing first: save your work before ending an app, and back up anything important.</p>
+<p>Know My PC can end processes, change startup items and move files to the Recycle Bin and clear temp files and caches when you ask it to. Check what you're closing or removing first: save your work before ending an app, and back up anything important.</p>
 
 <h2 id="warranty">No warranty</h2>
 <p>Know My PC is provided “as is”, without warranties of any kind, to the fullest extent the law allows.</p>
