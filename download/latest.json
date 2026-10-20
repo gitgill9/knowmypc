@@ -1,10 +1,10 @@
 {
-  "version": "0.2.0",
-  "notes": "- Know My PC now updates itself. You'll see a notice when a new version is ready.\n- A short welcome when you first open it, and a weekly summary of your PC's slowdowns.\n- New checks: busy network, slow drive response, a processor held back by heat or power settings, slow startup, apps that crash or freeze, and drives that report problems.\n- Settings → Changes made lists everything Know My PC changed, with Undo.\n- Copy support info in Settings → About makes asking for help quicker.\n- Faster and quieter: fixes now use Windows directly, and it does less while hidden in the tray.",
-  "pub_date": "2026-10-14T04:34:30Z",
+  "version": "0.2.1",
+  "notes": "This update needs a one-time manual install. Clicking Update now won't work for this version.\n- Download the new version from https://knowmypc.app and run it. Your license, settings and history stay as they are.\n- After that, future updates install with one click again.\n- New in 0.2.1: Free up space in Storage, and better graphics driver advice.",
+  "pub_date": "2026-10-20T05:21:42Z",
   "platforms": {
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSSmZxVDBITWlsL1FHbmNRT3ROWlZvOTdnTzl4K2crOHAvZHRzd2xuWjNlcTBNalJnRWlIZzlzdW5TNHo3UGhpT3lYVmh2aHUvTzdlVzFHMlljdmExdlZFSEFBbi8zUEFVPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkxOTUyNDY1CWZpbGU6S25vdyBNeSBQQ18wLjIuMF94NjQtc2V0dXAuZXhlCXZlcnNpb246MC4yLjAKRFZ0a2kzODlkbmJHWlJtT05mSUpuYnNEVUtBOXNZaXdYb1VjdjlxdWNJaEdTNU4wRkV3bGM2bXhia0V4bStaWFRFeE5ZUm5zL0VBd1lKcU1sd2hEQ3c9PQo=",
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUQ1FSaHB6eEk5aGtuVm8vM1NwdkhPanFKTzRWMXB5WkRzWkh4LzVCanpRQm1FK3ZZenRyWXM4YVFaOE00eVVNRXhQbHFVYzhheTZCYzlyU2dXMGtEdHhUa3pnMDEzbWdvPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyNDczNjk1CWZpbGU6S25vdyBNeSBQQ18wLjIuMV94NjQtc2V0dXAuZXhlCXZlcnNpb246MC4yLjEKNmtDMklRM1d1eW0xMVpYZWMvYUNzQm9iM1ExQXBIdkJFR2hWck5jMnZBanBCdVI3V3o0MGV4am11ajBsSlZwK3BmTWJMa2FWVWlmTFdHNjAweWpCQlE9PQo=",
       "url": "https://knowmypc.app/download/KnowMyPC-Setup.exe"
     }
   }
