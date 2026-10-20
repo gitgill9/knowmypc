@@ -28,10 +28,10 @@ REFUND_DAYS = 14
 SELLER = "Raspinder S"
 # Dates shown on pages and in the sitemap. Change a page's date only when its
 # content changes; Google treats dates that move on every build as fake freshness.
-HOME_UPDATED = "2026-10-14"
-SUPPORT_UPDATED = "2026-10-14"
+HOME_UPDATED = "2026-10-20"
+SUPPORT_UPDATED = "2026-10-20"
 PRIVACY_UPDATED = "2026-10-14"
-TERMS_UPDATED = "2026-10-14"
+TERMS_UPDATED = "2026-10-20"
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -131,7 +131,7 @@ PROBLEMS = [
      "A map of your folders shows what's big at a glance. Know My PC knows where Windows hides space: update caches, temp files, WSL disks, game libraries, model files.",
      ["Shows which folders are safe to clear and which hold your own files",
       "Installed apps sorted by size, with one-click uninstall",
-      "Only ever moves things to the Recycle Bin. Windows and Program Files are off-limits."],
+      "Free up space clears temp files, caches and old Windows Update downloads after showing you the total. Anything else only goes to the Recycle Bin, and Windows and Program Files are off-limits."],
      "Know My PC Storage screen: space that is safe to clear, such as temp files and the Chrome cache, above a clickable map of folders"),
     ("It takes forever to start.", "startup", "See what starts with Windows, and switch it off",
      "Every startup app, which company made it, and whether it's using memory right now. Switching one off works exactly like Task Manager, and you can switch it back on anytime.",
@@ -141,6 +141,8 @@ PROBLEMS = [
 ]
 
 NEW = [
+    ("Free up space", "Tick what to clear (temporary files, crash dumps, browser caches, the Recycle Bin, old Windows Update downloads) and see how much you'll get back before anything is deleted."),
+    ("Smarter graphics advice", "The Graphics tab no longer asks you to update a driver that's already up to date, and if a current driver keeps crashing it points at the likely cause: overclocks, heat or power."),
     ("Updates itself", "When a new version is ready, you'll see a notice. One click installs it, and every update is signed so only real Know My PC releases install."),
     ("More health checks", "Spots a busy network, slow drive response, a processor held back by heat or power settings, slow startup, apps that crash or freeze, and drives that report problems."),
     ("Changes made, with Undo", "Settings → Changes made lists everything Know My PC changed on your PC. Startup and graphics changes undo with one click; files are in the Recycle Bin."),
@@ -151,7 +153,7 @@ NEW = [
 
 FAQ = [
     ("Is it safe to use?",
-     "Know My PC never ends Windows' own processes, never deletes anything permanently (it only moves files to the Recycle Bin), and won't touch the Windows or Program Files folders. Startup changes use the same switch Task Manager uses, and Settings → Changes made lists everything it changed, with Undo."),
+     "Know My PC never ends Windows' own processes, only deletes what you tick in Free up space (temporary files and caches that Windows and your apps rebuild, after showing you the total), moves anything else to the Recycle Bin, and won't touch the Windows or Program Files folders. Startup changes use the same switch Task Manager uses, and Settings → Changes made lists everything it changed, with Undo."),
     ("Windows says “Windows protected your PC” when I install it.",
      "That's SmartScreen, which warns about apps it hasn't seen many downloads of yet. Click <b>More info</b>, then <b>Run anyway</b>. The installer is the same file that's linked from this page."),
     ("How do updates work?",
@@ -377,7 +379,7 @@ def support():
 <h3>Windows asks for permission when I click something</h3>
 <p>Some changes need administrator rights: closing a game that runs as administrator, or changing a startup app for all users. Know My PC asks Windows, and Windows asks you. Click <strong>Yes</strong> to continue.</p>
 <h3>Undoing a change</h3>
-<p>Settings → <strong>Changes made</strong> lists everything Know My PC changed: apps it ended, startup apps it switched off, graphics settings and files it moved. Click <strong>Undo</strong> next to a startup or graphics change to put it back. Files it removed are in the Recycle Bin, where you can restore them.</p>
+<p>Settings → <strong>Changes made</strong> lists everything Know My PC changed: apps it ended, startup apps it switched off, graphics settings and files it moved. Click <strong>Undo</strong> next to a startup or graphics change to put it back. Files it removed are in the Recycle Bin, where you can restore them. What Free up space clears (temporary files, caches, the Recycle Bin) is deleted for good, so it can't be undone.</p>
 <h3>A game won't close</h3>
 <p>Some anti-cheat systems block every other program from closing their game, even with administrator rights. Quit from inside the game or press <kbd>Alt</kbd> + <kbd>F4</kbd>.</p>
 <h3>History is empty or has gaps</h3>
@@ -446,7 +448,7 @@ def terms():
 <p>If Know My PC doesn't work for you, email <a href="mailto:{SUPPORT_EMAIL}">{SUPPORT_EMAIL}</a> within {REFUND_DAYS} days of buying lifetime, or of your first monthly payment, for a full refund. A refunded license key stops working. If you bought Know My PC before the monthly plan existed, your license is a lifetime license.</p>
 
 <h2 id="use">Using the software</h2>
-<p>Know My PC can end processes, change startup items and move files to the Recycle Bin when you ask it to. Check what you're closing or removing first: save your work before ending an app, and back up anything important.</p>
+<p>Know My PC can end processes, change startup items, move files to the Recycle Bin and, with Free up space, permanently delete temporary files, caches and the contents of the Recycle Bin when you ask it to. Check what you're closing or removing first: save your work before ending an app, and back up anything important.</p>
 
 <h2 id="warranty">No warranty</h2>
 <p>Know My PC is provided “as is”, without warranties of any kind, to the fullest extent the law allows.</p>
